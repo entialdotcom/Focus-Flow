@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ArrowLeft, 
-  Settings, 
-  Play, 
-  Pause, 
-  SkipBack, 
-  SkipForward, 
-  Volume2, 
-  Share2, 
+import {
+  ArrowLeft,
+  Settings,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  Share2,
   Maximize2,
   ChevronDown,
   Check,
@@ -16,9 +16,10 @@ import {
   Coffee,
   Brain,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  Trophy
 } from 'lucide-react';
-import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState } from '../types';
+import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState, Badge } from '../types';
 import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS } from '../constants';
 import { fetchQuote } from '../services/geminiService';
 import { AudioService } from '../services/audioService';
@@ -27,6 +28,8 @@ import Visualizer from './Visualizer';
 import TimerModal from './TimerModal';
 import MixerPanel from './MixerPanel';
 import AmbientTrack from './AmbientTrack';
+import { BadgeCelebration } from './BadgeCelebration';
+import { BadgeGallery } from './BadgeGallery';
 
 interface PlayerProps {
   mode: Mode;
@@ -56,7 +59,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
   const [volume, setVolume] = useState(80);
   const [streak, setStreak] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
-  
+
   // Mixer State
   const [showMixer, setShowMixer] = useState(false);
   const [mixerState, setMixerState] = useState<MixerState>({});
@@ -68,9 +71,14 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
   const [showTimerSettings, setShowTimerSettings] = useState(false);
   const [timerMode, setTimerMode] = useState<TimerMode>(TimerMode.INFINITE);
   const [quotesEnabled, setQuotesEnabled] = useState(false);
-  
+
   // AI Quote State
   const [quote, setQuote] = useState<Quote | null>(null);
+
+  // Badge State
+  const [celebrationBadge, setCelebrationBadge] = useState<Badge | null>(null);
+  const [showBadgeGallery, setShowBadgeGallery] = useState(false);
+  const [badgeQueue, setBadgeQueue] = useState<Badge[]>([]);
 
   // Track Info
   const trackInfo: TrackInfo = MOCK_TRACKS[mode];
@@ -96,10 +104,24 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
   // Initialize Audio and Stats
   useEffect(() => {
     AudioService.init('youtube-player');
-    
+
     // Load streak
     const profile = StorageService.getProfile();
     setStreak(profile.currentStreak);
+
+    // Check for pending badges from previous session
+    const pendingBadgesStr = sessionStorage.getItem('pendingBadges');
+    if (pendingBadgesStr) {
+      try {
+        const pendingBadges = JSON.parse(pendingBadgesStr) as Badge[];
+        if (pendingBadges.length > 0) {
+          setBadgeQueue(pendingBadges);
+          sessionStorage.removeItem('pendingBadges');
+        }
+      } catch (e) {
+        console.error('Failed to parse pending badges', e);
+      }
+    }
 
     // Initialize mixer state with defaults if empty
     if (Object.keys(mixerState).length === 0) {
@@ -113,10 +135,23 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
     // Clean up player and log session when component unmounts
     return () => {
       AudioService.cleanup();
-      
+
       // Log session if played for more than 10 seconds
       if (sessionTimeRef.current > 10) {
-        StorageService.logSession(sessionTimeRef.current / 60);
+        const updatedProfile = StorageService.logSession(sessionTimeRef.current / 60);
+
+        // Check for new badges
+        const newBadges = StorageService.checkNewBadges(updatedProfile);
+        if (newBadges.length > 0) {
+          // Store badges for next session (since we're unmounting)
+          sessionStorage.setItem('pendingBadges', JSON.stringify(newBadges));
+
+          // Unlock all new badges
+          newBadges.forEach(badge => StorageService.unlockBadge(badge.id));
+        }
+
+        // Update streak display
+        setStreak(updatedProfile.currentStreak);
       }
     };
   }, []);
@@ -138,7 +173,21 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
     if (isPlaying) {
       interval = setInterval(() => {
         // Track stats regardless of mode
-        sessionTimeRef.current += 1; 
+        sessionTimeRef.current += 1;
+
+        // Check for milestone badges every 10 seconds
+        if (sessionTimeRef.current % 10 === 0) {
+          const currentProfile = StorageService.getProfile();
+          // Simulate updated profile with current session time
+          const tempProfile = {
+            ...currentProfile,
+            totalMinutes: currentProfile.totalMinutes + (sessionTimeRef.current / 60)
+          };
+          const newBadges = StorageService.checkNewBadges(tempProfile);
+          if (newBadges.length > 0 && badgeQueue.length === 0 && !celebrationBadge) {
+            setBadgeQueue(newBadges);
+          }
+        }
 
         if (timerMode === TimerMode.INFINITE) {
           setElapsed(prev => prev + 1);
@@ -168,12 +217,29 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
       AudioService.pause();
     }
     return () => clearInterval(interval);
-  }, [isPlaying, timerMode, isBreak]);
+  }, [isPlaying, timerMode, isBreak, badgeQueue, celebrationBadge]);
 
   // Handle Volume
   useEffect(() => {
     AudioService.setVolume(volume);
   }, [volume]);
+
+  // Handle badge queue - show celebrations one at a time
+  useEffect(() => {
+    if (badgeQueue.length > 0 && !celebrationBadge) {
+      const [nextBadge, ...remaining] = badgeQueue;
+      setCelebrationBadge(nextBadge);
+      setBadgeQueue(remaining);
+    }
+  }, [badgeQueue, celebrationBadge]);
+
+  const handleBadgeCelebrationClose = () => {
+    if (celebrationBadge) {
+      // Unlock the badge
+      StorageService.unlockBadge(celebrationBadge.id);
+      setCelebrationBadge(null);
+    }
+  };
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -269,7 +335,14 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
         </div>
 
         <div className="flex items-center gap-4">
-           <button 
+           <button
+             onClick={() => setShowBadgeGallery(true)}
+             className="p-2 hover:bg-white/10 rounded-full transition-colors relative"
+             title="Badges"
+           >
+             <Trophy className="w-6 h-6" />
+           </button>
+           <button
              onClick={() => setShowTimerSettings(true)}
              className="p-2 hover:bg-white/10 rounded-full transition-colors relative"
            >
@@ -395,7 +468,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
         </div>
       </div>
 
-      <TimerModal 
+      <TimerModal
         isOpen={showTimerSettings}
         onClose={() => setShowTimerSettings(false)}
         timerMode={timerMode}
@@ -406,6 +479,20 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
         }}
         quotesEnabled={quotesEnabled}
         setQuotesEnabled={setQuotesEnabled}
+      />
+
+      {/* Badge Celebration Modal */}
+      {celebrationBadge && (
+        <BadgeCelebration
+          badge={celebrationBadge}
+          onClose={handleBadgeCelebrationClose}
+        />
+      )}
+
+      {/* Badge Gallery Modal */}
+      <BadgeGallery
+        isOpen={showBadgeGallery}
+        onClose={() => setShowBadgeGallery(false)}
       />
 
     </div>

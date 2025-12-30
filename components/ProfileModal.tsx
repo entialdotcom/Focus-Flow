@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, User, Trophy, Calendar, Clock, Activity } from 'lucide-react';
+import { X, User, Trophy, Calendar, Clock, Activity, Award } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import { UserProfile } from '../types';
+import { ALL_BADGES } from '../badgeConstants';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -90,17 +91,23 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, onUpdate }
             <div className="text-2xl font-bold text-white mb-1">{profile.currentStreak}</div>
             <div className="text-xs text-white/50 uppercase tracking-wider">Day Streak</div>
           </div>
-          
+
+          <div className="bg-white/5 rounded-xl p-4 flex flex-col items-center text-center hover:bg-white/10 transition-colors border border-white/5">
+            <Award className="w-6 h-6 text-purple-500 mb-2" />
+            <div className="text-2xl font-bold text-white mb-1">{profile.unlockedBadges?.length || 0}/{ALL_BADGES.length}</div>
+            <div className="text-xs text-white/50 uppercase tracking-wider">Badges</div>
+          </div>
+
           <div className="bg-white/5 rounded-xl p-4 flex flex-col items-center text-center hover:bg-white/10 transition-colors border border-white/5">
             <Activity className="w-6 h-6 text-blue-500 mb-2" />
             <div className="text-2xl font-bold text-white mb-1">{profile.totalSessions}</div>
-            <div className="text-xs text-white/50 uppercase tracking-wider">Total Sessions</div>
+            <div className="text-xs text-white/50 uppercase tracking-wider">Sessions</div>
           </div>
 
-          <div className="bg-white/5 rounded-xl p-4 flex flex-col items-center text-center hover:bg-white/10 transition-colors border border-white/5 col-span-2">
+          <div className="bg-white/5 rounded-xl p-4 flex flex-col items-center text-center hover:bg-white/10 transition-colors border border-white/5">
             <Clock className="w-6 h-6 text-green-500 mb-2" />
-            <div className="text-2xl font-bold text-white mb-1">{Math.floor(profile.totalMinutes)}</div>
-            <div className="text-xs text-white/50 uppercase tracking-wider">Minutes Focused</div>
+            <div className="text-2xl font-bold text-white mb-1">{Math.floor(profile.totalMinutes / 60)}h</div>
+            <div className="text-xs text-white/50 uppercase tracking-wider">Focused</div>
           </div>
         </div>
       </div>

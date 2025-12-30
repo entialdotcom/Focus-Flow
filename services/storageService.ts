@@ -1,4 +1,5 @@
-import { UserProfile } from '../types';
+import { UserProfile, Badge } from '../types';
+import { ALL_BADGES, LISTENING_BADGES, STREAK_BADGES } from '../badgeConstants';
 
 const STORAGE_KEY = 'focusflow_profile';
 
@@ -9,6 +10,7 @@ const DEFAULT_PROFILE: UserProfile = {
   currentStreak: 0,
   totalSessions: 0,
   totalMinutes: 0,
+  unlockedBadges: [],
 };
 
 export const StorageService = {
@@ -66,5 +68,43 @@ export const StorageService = {
 
     StorageService.saveProfile(profile);
     return profile;
+  },
+
+  checkNewBadges: (profile: UserProfile): Badge[] => {
+    const newBadges: Badge[] = [];
+    const totalHours = profile.totalMinutes / 60;
+
+    // Check listening hour badges
+    for (const badge of LISTENING_BADGES) {
+      if (totalHours >= badge.threshold && !profile.unlockedBadges.includes(badge.id)) {
+        newBadges.push(badge);
+      }
+    }
+
+    // Check streak badges
+    for (const badge of STREAK_BADGES) {
+      if (profile.currentStreak >= badge.threshold && !profile.unlockedBadges.includes(badge.id)) {
+        newBadges.push(badge);
+      }
+    }
+
+    return newBadges;
+  },
+
+  unlockBadge: (badgeId: string): UserProfile => {
+    const profile = StorageService.getProfile();
+    if (!profile.unlockedBadges.includes(badgeId)) {
+      profile.unlockedBadges.push(badgeId);
+      StorageService.saveProfile(profile);
+    }
+    return profile;
+  },
+
+  getUnlockedBadges: (profile: UserProfile): Badge[] => {
+    return ALL_BADGES.filter(badge => profile.unlockedBadges.includes(badge.id));
+  },
+
+  getLockedBadges: (profile: UserProfile): Badge[] => {
+    return ALL_BADGES.filter(badge => !profile.unlockedBadges.includes(badge.id));
   }
 };
