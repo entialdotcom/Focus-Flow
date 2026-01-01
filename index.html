@@ -16,11 +16,6 @@
             animation: {
               'blob': 'blob 10s infinite',
               'fade-in': 'fadeIn 0.5s ease-out',
-              'confetti': 'confetti 3s ease-out forwards',
-              'scale-in': 'scaleIn 0.5s ease-out',
-              'bounce-slow': 'bounceSlow 2s infinite',
-              'slide-up': 'slideUp 0.5s ease-out forwards',
-              'spin-slow': 'spin 3s linear infinite',
             },
             keyframes: {
               blob: {
@@ -32,23 +27,6 @@
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
-              },
-              confetti: {
-                '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
-                '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' },
-              },
-              scaleIn: {
-                '0%': { transform: 'scale(0) rotate(-180deg)', opacity: '0' },
-                '50%': { transform: 'scale(1.2) rotate(90deg)' },
-                '100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
-              },
-              bounceSlow: {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-10px)' },
-              },
-              slideUp: {
-                '0%': { transform: 'translateY(20px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
               }
             }
           }
@@ -79,13 +57,13 @@
   <script type="importmap">
 {
   "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@0.292.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-dom": "https://esm.sh/react-dom@18.2.0",
-    "react": "https://esm.sh/react@18.2.0",
-    "@google/genai": "https://esm.sh/@google/genai@0.2.1",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "lucide-react": "https://esm.sh/lucide-react@0.468.0?external=react",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "@google/generative-ai": "https://esm.sh/@google/generative-ai@0.24.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "react/": "https://esm.sh/react@19.0.0/"
   }
 }
 </script>

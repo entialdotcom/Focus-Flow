@@ -1,7 +1,8 @@
-import { UserProfile, Badge } from '../types';
-import { ALL_BADGES, LISTENING_BADGES, STREAK_BADGES } from '../badgeConstants';
+import { UserProfile, ListeningSession, Badge, BadgeType } from '../types';
+import { ALL_BADGES } from '../badgeConstants';
 
 const STORAGE_KEY = 'focusflow_profile';
+const HISTORY_KEY = 'focusflow_history';
 
 const DEFAULT_PROFILE: UserProfile = {
   name: '',
@@ -10,7 +11,6 @@ const DEFAULT_PROFILE: UserProfile = {
   currentStreak: 0,
   totalSessions: 0,
   totalMinutes: 0,
-  unlockedBadges: [],
 };
 
 export const StorageService = {
@@ -70,41 +70,107 @@ export const StorageService = {
     return profile;
   },
 
-  checkNewBadges: (profile: UserProfile): Badge[] => {
-    const newBadges: Badge[] = [];
-    const totalHours = profile.totalMinutes / 60;
-
-    // Check listening hour badges
-    for (const badge of LISTENING_BADGES) {
-      if (totalHours >= badge.threshold && !profile.unlockedBadges.includes(badge.id)) {
-        newBadges.push(badge);
+  // Listening History Methods
+  getHistory: (): ListeningSession[] => {
+    try {
+      const stored = localStorage.getItem(HISTORY_KEY);
+      if (stored) {
+        return JSON.parse(stored);
       }
+    } catch (e) {
+      console.error("Failed to load history", e);
     }
-
-    // Check streak badges
-    for (const badge of STREAK_BADGES) {
-      if (profile.currentStreak >= badge.threshold && !profile.unlockedBadges.includes(badge.id)) {
-        newBadges.push(badge);
-      }
-    }
-
-    return newBadges;
+    return [];
   },
 
-  unlockBadge: (badgeId: string): UserProfile => {
-    const profile = StorageService.getProfile();
-    if (!profile.unlockedBadges.includes(badgeId)) {
-      profile.unlockedBadges.push(badgeId);
-      StorageService.saveProfile(profile);
+  saveHistory: (history: ListeningSession[]) => {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    } catch (e) {
+      console.error("Failed to save history", e);
     }
-    return profile;
   },
 
+  addSession: (session: ListeningSession): ListeningSession[] => {
+    const history = StorageService.getHistory();
+    // Add new session at the beginning (most recent first)
+    const updated = [session, ...history];
+    // Keep only last 100 sessions
+    const trimmed = updated.slice(0, 100);
+    StorageService.saveHistory(trimmed);
+    return trimmed;
+  },
+
+  clearHistory: () => {
+    try {
+      localStorage.removeItem(HISTORY_KEY);
+    } catch (e) {
+      console.error("Failed to clear history", e);
+    }
+  },
+
+  // Favorites Methods
+  getFavorites: (): string[] => {
+    try {
+      const stored = localStorage.getItem('focusflow_favorites');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (e) {
+      console.error("Failed to load favorites", e);
+    }
+    return [];
+  },
+
+  saveFavorites: (favoriteIds: string[]) => {
+    try {
+      localStorage.setItem('focusflow_favorites', JSON.stringify(favoriteIds));
+    } catch (e) {
+      console.error("Failed to save favorites", e);
+    }
+  },
+
+  toggleFavorite: (trackId: string): boolean => {
+    const favorites = StorageService.getFavorites();
+    const index = favorites.indexOf(trackId);
+    if (index > -1) {
+      favorites.splice(index, 1);
+      StorageService.saveFavorites(favorites);
+      return false;
+    } else {
+      favorites.push(trackId);
+      StorageService.saveFavorites(favorites);
+      return true;
+    }
+  },
+
+  isFavorite: (trackId: string): boolean => {
+    const favorites = StorageService.getFavorites();
+    return favorites.includes(trackId);
+  },
+
+  // Badge Methods
   getUnlockedBadges: (profile: UserProfile): Badge[] => {
-    return ALL_BADGES.filter(badge => profile.unlockedBadges.includes(badge.id));
+    const totalHours = profile.totalMinutes / 60;
+    return ALL_BADGES.filter(badge => {
+      if (badge.type === BadgeType.LISTENING_HOURS) {
+        return totalHours >= badge.threshold;
+      } else if (badge.type === BadgeType.STREAK) {
+        return profile.currentStreak >= badge.threshold;
+      }
+      return false;
+    });
   },
 
   getLockedBadges: (profile: UserProfile): Badge[] => {
-    return ALL_BADGES.filter(badge => !profile.unlockedBadges.includes(badge.id));
+    const totalHours = profile.totalMinutes / 60;
+    return ALL_BADGES.filter(badge => {
+      if (badge.type === BadgeType.LISTENING_HOURS) {
+        return totalHours < badge.threshold;
+      } else if (badge.type === BadgeType.STREAK) {
+        return profile.currentStreak < badge.threshold;
+      }
+      return true;
+    });
   }
 };

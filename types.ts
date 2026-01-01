@@ -1,13 +1,31 @@
 export enum AppView {
   HOME = 'HOME',
-  PLAYER = 'PLAYER'
+  PLAYER = 'PLAYER',
+  HISTORY = 'HISTORY',
+  LIBRARY = 'LIBRARY'
 }
 
 export enum Mode {
   FOCUS = 'Focus',
   RELAX = 'Relax',
   SLEEP = 'Sleep',
-  MEDITATE = 'Meditate'
+  MEDITATE = 'Meditate',
+  MOTIVATION = 'Motivation'
+}
+
+export interface Mood {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface Track {
+  id: string;
+  title: string;
+  videoId: string;
+  moodId?: string;
+  category?: string;
+  url?: string;
 }
 
 export interface Activity {
@@ -15,6 +33,7 @@ export interface Activity {
   name: string;
   description: string;
   mode: Mode;
+  moods?: Mood[];
 }
 
 export interface TrackInfo {
@@ -34,21 +53,6 @@ export interface Quote {
   author: string;
 }
 
-export enum BadgeType {
-  LISTENING_HOURS = 'LISTENING_HOURS',
-  STREAK = 'STREAK'
-}
-
-export interface Badge {
-  id: string;
-  type: BadgeType;
-  name: string;
-  description: string;
-  threshold: number; // hours for listening, days for streak
-  icon: string; // emoji or icon identifier
-  unlockedAt?: string; // ISO Date string when earned
-}
-
 export interface UserProfile {
   name: string;
   memberSince: string; // ISO Date string
@@ -56,7 +60,6 @@ export interface UserProfile {
   currentStreak: number;
   totalSessions: number;
   totalMinutes: number;
-  unlockedBadges: string[]; // array of badge IDs
 }
 
 export interface AmbientSound {
@@ -71,4 +74,30 @@ export interface MixerState {
     active: boolean;
     volume: number;
   };
+}
+
+export interface ListeningSession {
+  id: string;
+  date: string; // ISO Date string
+  duration: number; // minutes
+  mode: Mode;
+  activityId: string;
+  activityName: string;
+  trackTitle?: string;
+  moodId?: string;
+  moodName?: string;
+}
+
+export enum BadgeType {
+  LISTENING_HOURS = 'LISTENING_HOURS',
+  STREAK = 'STREAK'
+}
+
+export interface Badge {
+  id: string;
+  type: BadgeType;
+  name: string;
+  description: string;
+  threshold: number;
+  icon: string;
 }

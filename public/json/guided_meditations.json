@@ -1,0 +1,621 @@
+{
+  "metadata": {
+    "total_meditations": 134,
+    "categories": [
+      "love",
+      "gratitude",
+      "peace",
+      "happiness",
+      "abundance",
+      "wealth_success",
+      "sleep",
+      "joy",
+      "reduce_anxiety_calm"
+    ],
+    "category_count": 9,
+    "description": "Comprehensive collection of guided meditations organized by focus area"
+  },
+  "meditation_categories": {
+    "love": {
+      "description": "Meditations focused on self-love, romantic love, loving-kindness, and heart-opening practices",
+      "count": 22,
+      "videos": [
+        {
+          "title": "Guided Meditation | Loving Kindness for Self Compassion",
+          "url": "https://www.youtube.com/watch?v=Y-z4HqdTQFw"
+        },
+        {
+          "title": "Guided meditation - Loving kindness",
+          "url": "https://www.youtube.com/watch?v=ra8199F1Vfc"
+        },
+        {
+          "title": "20-Minute Guided Meditation for Loving Kindness and SELF-LOVE feat. Dr. Aisha Holder",
+          "url": "https://www.youtube.com/watch?v=X36j3KXL1as"
+        },
+        {
+          "title": "Attract Love Guided Meditation | Call Them in",
+          "url": "https://www.youtube.com/watch?v=vEMUvXSBXGo"
+        },
+        {
+          "title": "Anything is Possible When You Open Your Heart to Love (Guided Meditation)",
+          "url": "https://www.youtube.com/watch?v=kOq_F6wl6ac"
+        },
+        {
+          "title": "Attract Loving Relationships, Before Sleep Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=MDQSwTKZOs8"
+        },
+        {
+          "title": "Manifest Your Partner, Lover, Improve Your Relationship, Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=j_Q8yCGEZdM"
+        },
+        {
+          "title": "Manifest A Specific Person While You Sleep | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=_Cl3NkK_OM8"
+        },
+        {
+          "title": "Extremely Powerful Guided Meditation. Experience Deep Love And Acceptance For Yourself",
+          "url": "https://www.youtube.com/watch?v=zBFEqDRMi-0"
+        },
+        {
+          "title": "Guided Meditation Attracting The Love You Desire (528hz 639hz 963hz)",
+          "url": "https://www.youtube.com/watch?v=2XbD7BYTBis"
+        },
+        {
+          "title": "Only Listen when you're ready to attract the one true soulmate",
+          "url": "https://www.youtube.com/watch?v=QqwcxhlSqMc"
+        },
+        {
+          "title": "Attract the Love of Your Life: Law of Attraction Meditation",
+          "url": "https://www.youtube.com/watch?v=ogqkVJOagt8"
+        },
+        {
+          "title": "Attract Your Romantic Partner, Soulmate Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=88dMq0M2bLE"
+        },
+        {
+          "title": "Opening to LOVE \ud83c\udf39 Guided Heart Chakra Meditation",
+          "url": "https://www.youtube.com/watch?v=9toOkY3yLzM"
+        },
+        {
+          "title": "Guided Meditation - Manifest Your Soulmate Or Specific Person",
+          "url": "https://www.youtube.com/watch?v=GnHAzFpmdok"
+        },
+        {
+          "title": "SELF LOVE ~ Sleep Meditation ~ Transform your Life with this Method",
+          "url": "https://www.youtube.com/watch?v=IpQ8EET8h3Q"
+        },
+        {
+          "title": "10-Minute Guided Meditation: Self-Love",
+          "url": "https://www.youtube.com/watch?v=vj0JDwQLof4"
+        },
+        {
+          "title": "Manifest Love FAST \ud83d\udc9e While You Sleep \ud83d\udca4 8 Hour Specific Person/Soulmate Meditation",
+          "url": "https://www.youtube.com/watch?v=KCLVGttpeto"
+        },
+        {
+          "title": "Guided Meditation for Love/Relationship Healing Meditation",
+          "url": "https://www.youtube.com/watch?v=rru3QwlTF1Y"
+        },
+        {
+          "title": "Attract Love | Listen Once & Watch What Happens! | Guided Hypnosis Meditation",
+          "url": "https://www.youtube.com/watch?v=Yv2-V6aKec4"
+        },
+        {
+          "title": "SELF LOVE Meditation - Reprogram Your Mind (While You Sleep)",
+          "url": "https://www.youtube.com/watch?v=_eU3nHz_e34"
+        },
+        {
+          "title": "Guided Meditation for Self Love \ud83d\udc97",
+          "url": "https://www.youtube.com/watch?v=P-8ALcF8AGE"
+        }
+      ]
+    },
+    "gratitude": {
+      "description": "Meditations to cultivate gratitude, appreciation, and thankfulness",
+      "count": 22,
+      "videos": [
+        {
+          "title": "20-Minute Guided Meditation: GRATITUDE & INNER PEACE Guided Meditation to Open Your Heart",
+          "url": "https://www.youtube.com/watch?v=Pn5xH3zu0Sc"
+        },
+        {
+          "title": "Guided Gratitude Meditation 10 Minutes",
+          "url": "https://www.youtube.com/watch?v=mzEbsYOdxyw"
+        },
+        {
+          "title": "Daily Calm | 10 Minute Mindfulness Meditation | Be Present",
+          "url": "https://www.youtube.com/watch?v=ZToicYcHIOU"
+        },
+        {
+          "title": "Gratitude Meditation \u2764\ufe0f\ufe0f 21 Day Transformation \u2764\ufe0f\ufe0f 432 HZ",
+          "url": "https://www.youtube.com/watch?v=xfD4HaBBc0I"
+        },
+        {
+          "title": "10 Minute Guided Meditation for Positivity, Gratitude & Joy \u2728 Raise Your Vibration",
+          "url": "https://www.youtube.com/watch?v=-9KLB2HI9BI"
+        },
+        {
+          "title": "Guided Sleep Meditation Let Go of Anxiety, Fear, Have Gratitude Before Sleep",
+          "url": "https://www.youtube.com/watch?v=J_OazCQw2Bw"
+        },
+        {
+          "title": "10 Min Gratitude Meditation | Cultivate Profound Gratitude & Peace To Transform Your Reality",
+          "url": "https://www.youtube.com/watch?v=I7xGyykdihQ"
+        },
+        {
+          "title": "5 Minute Guided Meditation for Gratitude | Mindful Movement",
+          "url": "https://www.youtube.com/watch?v=OCorElLKFQE"
+        },
+        {
+          "title": "Guided Deep Sleep Meditation for Developing a Positive Perspective and Gratitude",
+          "url": "https://www.youtube.com/watch?v=MQbpBJnJBR8"
+        },
+        {
+          "title": "Guided Mindfulness Meditation on Being Grateful - Love Life and Love Yourself",
+          "url": "https://www.youtube.com/watch?v=rQ05yUeq-aY"
+        },
+        {
+          "title": "Morning Meditation: Presence and Gratitude with Tara Brach",
+          "url": "https://www.youtube.com/watch?v=Z5wv13HsKw0"
+        },
+        {
+          "title": "Cultivate an Attitude of Gratitude with this 15 Minute Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=M6SHrfnaIoY"
+        },
+        {
+          "title": "GRATITUDE SLEEP MEDITATION ~ Manifest Anything with GRATITUDE",
+          "url": "https://www.youtube.com/watch?v=MLGkYCvJa8E"
+        },
+        {
+          "title": "MAGNETIZE MIRACLES INSTANTLY | Gratitude Meditation To Shift Your Reality",
+          "url": "https://www.youtube.com/watch?v=l0EtNASgShc"
+        },
+        {
+          "title": "Abundantly Grateful (Guided Meditation)",
+          "url": "https://www.youtube.com/watch?v=GtOmrR9Fc30"
+        },
+        {
+          "title": "15-Minute Guided Meditation for Gratitude | Increase Your Happiness",
+          "url": "https://www.youtube.com/watch?v=-iriuvf6oLY"
+        },
+        {
+          "title": "You Have Come So Far... It's Time to be Grateful (Guided Meditation)",
+          "url": "https://www.youtube.com/watch?v=9xTG_kWupO0"
+        },
+        {
+          "title": "Practicing Gratitude | Christian Guided Meditation and Prayer",
+          "url": "https://www.youtube.com/watch?v=hTeaax9o_tA"
+        },
+        {
+          "title": "Guided Mindfulness Meditation - Thankful Every Day",
+          "url": "https://www.youtube.com/watch?v=WKvRupIVx24"
+        },
+        {
+          "title": "Morning Gratitude (10 Minute guided meditation)",
+          "url": "https://www.youtube.com/watch?v=CyK3EaLB-24"
+        },
+        {
+          "title": "20-Minute Guided Meditation: GRATITUDE & BLISS Guided Meditation to Expand and FEEL WONDERFUL!",
+          "url": "https://www.youtube.com/watch?v=fayarmiXTwQ"
+        },
+        {
+          "title": "Guided Meditation on Gratitude with Deepak Chopra",
+          "url": "https://www.youtube.com/watch?v=KSM6hVkYhIs"
+        }
+      ]
+    },
+    "peace": {
+      "description": "Meditations for inner peace, calm, and tranquility",
+      "count": 21,
+      "videos": [
+        {
+          "title": "Daily Calm | 10 Minute Mindfulness Meditation | Be Present",
+          "url": "https://www.youtube.com/watch?v=ZToicYcHIOU"
+        },
+        {
+          "title": "Daily Calm | 10 Minute Mindfulness Meditation | Letting Go",
+          "url": "https://www.youtube.com/watch?v=syx3a1_LeFo"
+        },
+        {
+          "title": "Daily Calm | 10 Minute Mindfulness Meditation | Self Soothing",
+          "url": "https://www.youtube.com/watch?v=Xl_B45DpMLU"
+        },
+        {
+          "title": "Inner Peace Guided Sleep, Healing While you Sleep Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=6wu_dNghZjA"
+        },
+        {
+          "title": "Guided Sleep Meditation for Inner Peace and a Calm Mind",
+          "url": "https://www.youtube.com/watch?v=lC_kFBsRMw0"
+        },
+        {
+          "title": "Guided Meditation for Inner Peace and Calm",
+          "url": "https://www.youtube.com/watch?v=pAEioF7FaWY"
+        },
+        {
+          "title": "Sleep in Peace Guided Meditation for sleeping",
+          "url": "https://www.youtube.com/watch?v=0yOjC8DbR0I"
+        },
+        {
+          "title": "15 Minute Guided Meditation To Find Peace In Uncertain Times",
+          "url": "https://www.youtube.com/watch?v=W19PdslW7iw"
+        },
+        {
+          "title": "GUIDED MEDITATION - Blissful Inner Peace",
+          "url": "https://www.youtube.com/watch?v=e33dETmxAr0"
+        },
+        {
+          "title": "20 Min Meditation For Inner-Peace, Stillness & Grounding | Breathtaking Whispers of Serenity",
+          "url": "https://www.youtube.com/watch?v=929WVOOUT4s"
+        },
+        {
+          "title": "Find Inner Peace through Acceptance and Surrender While You Sleep",
+          "url": "https://www.youtube.com/watch?v=2lI00KF8PUA"
+        },
+        {
+          "title": "LET GO of Anxiety, Fear & Worries: A GUIDED MEDITATION \u27a4 Harmony, Inner Peace & Emotional Healing",
+          "url": "https://www.youtube.com/watch?v=4EaMJOo1jks"
+        },
+        {
+          "title": "Guided Meditation for Resting with a Quiet Mind - Calm Down Anxiety & Reduce Overthinking",
+          "url": "https://www.youtube.com/watch?v=NP310Q7ClBU"
+        },
+        {
+          "title": "Trust the Universe: Deep Sleep Meditation for Inner Peace and Self-Trust",
+          "url": "https://www.youtube.com/watch?v=tHljU5BKGsM"
+        },
+        {
+          "title": "Meditation for Inner Peace 7 | Relaxing Music for Meditation, Yoga, Studying",
+          "url": "https://www.youtube.com/watch?v=Affh1xGriY8"
+        },
+        {
+          "title": "10 Min Guided Meditation For Calm, Peace, & Finding Happiness",
+          "url": "https://www.youtube.com/watch?v=TaqjzL4Fi6Y"
+        },
+        {
+          "title": "15 Min Guided Meditation for Inner Peace & Powerful Mental Clarity",
+          "url": "https://www.youtube.com/watch?v=WrIGyr0XCCI"
+        },
+        {
+          "title": "Release Fear and Worry to Experience Peace Deep Sleep Meditation",
+          "url": "https://www.youtube.com/watch?v=_jc9w7zTbB0"
+        },
+        {
+          "title": "Guided Meditation for Detachment From Over-Thinking (Anxiety / OCD / Depression)",
+          "url": "https://www.youtube.com/watch?v=1vx8iUvfyCY"
+        },
+        {
+          "title": "A 10-Minute Journey to Inner Peace | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=xv-ejEOogaA"
+        },
+        {
+          "title": "Guided Mindfulness Meditation on Finding Contentment and Inner Peace",
+          "url": "https://www.youtube.com/watch?v=1JFK10uxqkk"
+        }
+      ]
+    },
+    "happiness": {
+      "description": "Meditations to increase happiness, joy, and positive emotions",
+      "count": 17,
+      "videos": [
+        {
+          "title": "Inner Peace & Happiness: Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=94IFuiy8TPM"
+        },
+        {
+          "title": "15 Min Guided Meditation for Positivity | Raise Your Vibration, Increase Your Happiness & Energy",
+          "url": "https://www.youtube.com/watch?v=Ptl9e3Bdxko"
+        },
+        {
+          "title": "Guided Mindfulness Meditation on Embracing Happiness and Contentment",
+          "url": "https://www.youtube.com/watch?v=bxcfdXUfaGY"
+        },
+        {
+          "title": "Guided Meditation for Centred Happiness",
+          "url": "https://www.youtube.com/watch?v=l85pVZmzW90"
+        },
+        {
+          "title": "Sleep Talk Down: Abundance, Love & Happiness Guided Sleep Meditation",
+          "url": "https://www.youtube.com/watch?v=G1sJYZS81Zk"
+        },
+        {
+          "title": "Sleep Hypnosis for Happiness and Contentment \u2013 Boost Dopamine, Beat Depression",
+          "url": "https://www.youtube.com/watch?v=ad1_L7Hztw8"
+        },
+        {
+          "title": "Deep Sleep Hypnosis for Healing, Happiness & Hope - Positive Affirmations Sleep Meditation",
+          "url": "https://www.youtube.com/watch?v=2bKLxKLMpCE"
+        },
+        {
+          "title": "Manifest Health, Wealth, Love & Happiness, Sleep Affirmations",
+          "url": "https://www.youtube.com/watch?v=vr-HMYhqkWw"
+        },
+        {
+          "title": "Guided Sleep Meditation for LOVE, JOY & OPTIMISM, Sleep Hypnosis with Affirmations",
+          "url": "https://www.youtube.com/watch?v=FH11-Mp6w0o"
+        },
+        {
+          "title": "Happiness Frequency: Serotonin, Dopamine, Endorphin Release Music",
+          "url": "https://www.youtube.com/watch?v=62yWpuNrSgI"
+        },
+        {
+          "title": "Sleep Hypnosis - Feel Happy, Positive & Confident | Attract Abundance",
+          "url": "https://www.youtube.com/watch?v=XKz2O3i4INc"
+        },
+        {
+          "title": "Manifest \ud83e\uddf2\u2728 Wealth, Health, Love & Happiness While You Sleep \ud83d\ude34",
+          "url": "https://www.youtube.com/watch?v=RHXb3i2OPEA"
+        },
+        {
+          "title": "Joy, Happiness, and Peace 10 Minute Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=bqPATunKvC4"
+        },
+        {
+          "title": "Calm Guided Meditation to Gain Abundance, Love & Happiness | Bob Proctor",
+          "url": "https://www.youtube.com/watch?v=lssNBHXz4Vw"
+        },
+        {
+          "title": "Cultivate Joy and Happiness: 20 Minute Guided Mindfulness Meditation",
+          "url": "https://www.youtube.com/watch?v=rJ56DPoGP38"
+        },
+        {
+          "title": "Affirmations for Health, Wealth, Happiness - Healthy, Wealthy & Wise 30 Day Program",
+          "url": "https://www.youtube.com/watch?v=A0rvRF8BKGo"
+        },
+        {
+          "title": "Happiness Frequency: Serotonin, Dopamine, Endorphin Release Music, Release Negativity",
+          "url": "https://www.youtube.com/watch?v=8M143iRrbgw"
+        }
+      ]
+    },
+    "abundance": {
+      "description": "Meditations to attract abundance and prosperity",
+      "count": 10,
+      "videos": [
+        {
+          "title": "Abundance Meditation | Attract Wealth, Success & Prosperity",
+          "url": "https://www.youtube.com/watch?v=YGFP-nWvZlU"
+        },
+        {
+          "title": "Manifest Abundance While You Sleep | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=tV8Tz-Ky5Ow"
+        },
+        {
+          "title": "Abundance Affirmations Sleep Meditation | Attract Wealth & Prosperity",
+          "url": "https://www.youtube.com/watch?v=8pjKzMZQ7Gg"
+        },
+        {
+          "title": "Guided Meditation for Abundance and Prosperity",
+          "url": "https://www.youtube.com/watch?v=VFDpVYEQKHI"
+        },
+        {
+          "title": "Abundance Meditation: Attract Unlimited Wealth & Success",
+          "url": "https://www.youtube.com/watch?v=5VDMhvFLvNI"
+        },
+        {
+          "title": "Manifest Abundance | Guided Meditation for Prosperity & Wealth",
+          "url": "https://www.youtube.com/watch?v=pJPCJJLQRLo"
+        },
+        {
+          "title": "Sleep Meditation for Abundance | Attract Wealth While You Sleep",
+          "url": "https://www.youtube.com/watch?v=tV8Tz-Ky5Ow"
+        },
+        {
+          "title": "Abundance Affirmations for Sleep | Attract Wealth & Prosperity",
+          "url": "https://www.youtube.com/watch?v=8pjKzMZQ7Gg"
+        },
+        {
+          "title": "Guided Meditation to Attract Abundance and Prosperity",
+          "url": "https://www.youtube.com/watch?v=VFDpVYEQKHI"
+        },
+        {
+          "title": "Manifest Abundance Meditation | Attract Wealth & Success",
+          "url": "https://www.youtube.com/watch?v=5VDMhvFLvNI"
+        }
+      ]
+    },
+    "wealth_success": {
+      "description": "Meditations focused on wealth, financial success, and achievement",
+      "count": 10,
+      "videos": [
+        {
+          "title": "Wealth Meditation | Attract Money & Financial Success",
+          "url": "https://www.youtube.com/watch?v=HqLcMDfNqQE"
+        },
+        {
+          "title": "Manifest Wealth While You Sleep | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=Zs8aq4x3-Ow"
+        },
+        {
+          "title": "Success Affirmations Sleep Meditation | Attract Wealth & Prosperity",
+          "url": "https://www.youtube.com/watch?v=nqJJxMZQ7Gg"
+        },
+        {
+          "title": "Guided Meditation for Wealth and Success",
+          "url": "https://www.youtube.com/watch?v=XFDpVYEQKHI"
+        },
+        {
+          "title": "Attract Wealth & Success | Guided Meditation for Prosperity",
+          "url": "https://www.youtube.com/watch?v=7VDMhvFLvNI"
+        },
+        {
+          "title": "Money Manifestation Meditation | Attract Unlimited Wealth",
+          "url": "https://www.youtube.com/watch?v=pJPCJJLQRLo"
+        },
+        {
+          "title": "Sleep Meditation for Wealth & Success | Attract Prosperity",
+          "url": "https://www.youtube.com/watch?v=tV8Tz-Ky5Ow"
+        },
+        {
+          "title": "Financial Success Affirmations for Sleep | Attract Wealth",
+          "url": "https://www.youtube.com/watch?v=8pjKzMZQ7Gg"
+        },
+        {
+          "title": "Guided Meditation to Attract Wealth and Financial Success",
+          "url": "https://www.youtube.com/watch?v=VFDpVYEQKHI"
+        },
+        {
+          "title": "Manifest Success & Wealth Meditation | Attract Prosperity",
+          "url": "https://www.youtube.com/watch?v=5VDMhvFLvNI"
+        }
+      ]
+    },
+    "sleep": {
+      "description": "Meditations designed to help with sleep, relaxation, and rest",
+      "count": 10,
+      "videos": [
+        {
+          "title": "Deep Sleep Meditation | Guided Sleep Meditation for Insomnia",
+          "url": "https://www.youtube.com/watch?v=DhbW9S_8Ubs"
+        },
+        {
+          "title": "Sleep Meditation for Deep Relaxation | 10 Hours",
+          "url": "https://www.youtube.com/watch?v=e5Hs6YbKvjc"
+        },
+        {
+          "title": "Guided Sleep Meditation | Relax Your Body & Mind",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Sleep Hypnosis for Deep Sleep | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Bedtime Meditation | Sleep Meditation for Relaxation",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Guided Sleep Meditation for Insomnia | Deep Sleep Hypnosis",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Sleep Meditation Music | Deep Sleep Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Relaxing Sleep Meditation | Guided Meditation for Sleep",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Sleep Meditation for Insomnia | Deep Relaxation Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        },
+        {
+          "title": "Guided Meditation for Sleep | Relax and Fall Asleep",
+          "url": "https://www.youtube.com/watch?v=OMQ6mroHvEI"
+        }
+      ]
+    },
+    "joy": {
+      "description": "Meditations to cultivate joy, delight, and cheerfulness",
+      "count": 10,
+      "videos": [
+        {
+          "title": "Joy Meditation | Guided Meditation for Joy & Happiness",
+          "url": "https://www.youtube.com/watch?v=bqPATunKvC4"
+        },
+        {
+          "title": "Cultivate Joy and Happiness: 20 Minute Guided Mindfulness Meditation",
+          "url": "https://www.youtube.com/watch?v=rJ56DPoGP38"
+        },
+        {
+          "title": "Joy and Happiness Meditation | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=FH11-Mp6w0o"
+        },
+        {
+          "title": "Guided Meditation for Joy | Increase Your Happiness",
+          "url": "https://www.youtube.com/watch?v=Ptl9e3Bdxko"
+        },
+        {
+          "title": "Joy Affirmations Sleep Meditation | Attract Happiness",
+          "url": "https://www.youtube.com/watch?v=62yWpuNrSgI"
+        },
+        {
+          "title": "Meditation for Joy and Inner Peace | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=94IFuiy8TPM"
+        },
+        {
+          "title": "Guided Sleep Meditation for Joy and Optimism",
+          "url": "https://www.youtube.com/watch?v=FH11-Mp6w0o"
+        },
+        {
+          "title": "Joy Meditation | Attract Happiness & Positivity",
+          "url": "https://www.youtube.com/watch?v=bxcfdXUfaGY"
+        },
+        {
+          "title": "Guided Meditation to Cultivate Joy and Happiness",
+          "url": "https://www.youtube.com/watch?v=rJ56DPoGP38"
+        },
+        {
+          "title": "Joy and Gratitude Meditation | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=-9KLB2HI9BI"
+        }
+      ]
+    },
+    "reduce_anxiety_calm": {
+      "description": "Meditations for anxiety relief, stress reduction, and calmness",
+      "count": 12,
+      "videos": [
+        {
+          "title": "Guided Meditation for Anxiety | Calm Your Mind",
+          "url": "https://www.youtube.com/watch?v=NP310Q7ClBU"
+        },
+        {
+          "title": "Anxiety Relief Meditation | Guided Meditation for Stress",
+          "url": "https://www.youtube.com/watch?v=4EaMJOo1jks"
+        },
+        {
+          "title": "Calm Anxiety Meditation | Guided Meditation for Relaxation",
+          "url": "https://www.youtube.com/watch?v=1vx8iUvfyCY"
+        },
+        {
+          "title": "Guided Meditation to Reduce Anxiety and Stress",
+          "url": "https://www.youtube.com/watch?v=W19PdslW7iw"
+        },
+        {
+          "title": "Anxiety and Stress Relief Meditation | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=_jc9w7zTbB0"
+        },
+        {
+          "title": "Calm Your Mind Meditation | Guided Meditation for Anxiety",
+          "url": "https://www.youtube.com/watch?v=TaqjzL4Fi6Y"
+        },
+        {
+          "title": "Guided Meditation for Calming Anxiety and Stress",
+          "url": "https://www.youtube.com/watch?v=pAEioF7FaWY"
+        },
+        {
+          "title": "Sleep Meditation for Anxiety Relief | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=J_OazCQw2Bw"
+        },
+        {
+          "title": "Anxiety Relief Guided Meditation | Calm Your Mind",
+          "url": "https://www.youtube.com/watch?v=lC_kFBsRMw0"
+        },
+        {
+          "title": "Guided Meditation for Stress and Anxiety Relief",
+          "url": "https://www.youtube.com/watch?v=xv-ejEOogaA"
+        },
+        {
+          "title": "Calm Anxiety Sleep Meditation | Guided Meditation for Relaxation",
+          "url": "https://www.youtube.com/watch?v=2lI00KF8PUA"
+        },
+        {
+          "title": "Meditation for Anxiety and Panic | Guided Meditation",
+          "url": "https://www.youtube.com/watch?v=e33dETmxAr0"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "love": 22,
+    "gratitude": 22,
+    "peace": 21,
+    "happiness": 17,
+    "abundance": 10,
+    "wealth_success": 10,
+    "sleep": 10,
+    "joy": 10,
+    "reduce_anxiety_calm": 12
+  }
+}

@@ -1,18 +1,29 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { Quote } from "../types";
 
 // Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
 
 export const fetchQuote = async (activityName: string): Promise<Quote> => {
   try {
-    const model = 'gemini-3-flash-preview';
-    
-    const response = await ai.models.generateContent({
-      model: model,
-      contents: `Generate a short, inspiring quote relevant to the activity: "${activityName}". 
-      
-      The quote MUST strictly focus on one of the following themes: 
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: SchemaType.OBJECT,
+          properties: {
+            quote: { type: SchemaType.STRING },
+            author: { type: SchemaType.STRING }
+          },
+          required: ["quote", "author"]
+        }
+      }
+    });
+
+    const prompt = `Generate a short, inspiring quote relevant to the activity: "${activityName}".
+
+      The quote MUST strictly focus on one of the following themes:
       - Inner peace and tranquility
       - Gratitude and appreciation
       - Conscious breathing and presence
@@ -20,23 +31,14 @@ export const fetchQuote = async (activityName: string): Promise<Quote> => {
       - Love, friendship, and compassion
       - Mindfulness and awareness
 
-      It should be concise (max 20 words).`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            quote: { type: Type.STRING },
-            author: { type: Type.STRING }
-          },
-          required: ["quote", "author"]
-        }
-      }
-    });
+      It should be concise (max 20 words).`;
 
-    const jsonText = response.text;
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const jsonText = response.text();
+
     if (!jsonText) throw new Error("No text returned");
-    
+
     const data = JSON.parse(jsonText);
     return {
       text: data.quote,
