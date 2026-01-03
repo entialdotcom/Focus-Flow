@@ -11,6 +11,21 @@ export interface MeditationVideo {
   url: string;
 }
 
+export interface FocusVideo {
+  title: string;
+  url: string;
+  views: string;
+  published: string;
+}
+
+export interface FocusData {
+  channel: {
+    name: string;
+    handle: string;
+  };
+  videos: FocusVideo[];
+}
+
 export interface MotivationCategory {
   description: string;
   count: number;
@@ -64,6 +79,7 @@ export function extractYouTubeVideoId(url: string): string {
 // Cache for loaded data
 let motivationDataCache: MotivationData | null = null;
 let meditationDataCache: MeditationData | null = null;
+let focusDataCache: FocusData | null = null;
 
 // Load motivation videos from JSON
 export async function loadMotivationVideos(): Promise<MotivationData | null> {
@@ -105,6 +121,28 @@ export async function loadGuidedMeditations(): Promise<MeditationData | null> {
     return data;
   } catch (error) {
     console.error('Error loading guided meditations:', error);
+    return null;
+  }
+}
+
+// Load focus tracks from Founder FM JSON
+export async function loadFocusTracks(): Promise<FocusData | null> {
+  if (focusDataCache) {
+    return focusDataCache;
+  }
+  
+  try {
+    const response = await fetch('/json/founder_fm_videos.json');
+    if (!response.ok) {
+      console.error('Failed to load focus tracks:', response.statusText);
+      return null;
+    }
+    
+    const data: FocusData = await response.json();
+    focusDataCache = data;
+    return data;
+  } catch (error) {
+    console.error('Error loading focus tracks:', error);
     return null;
   }
 }
@@ -196,6 +234,20 @@ export async function getRandomMeditationTrack(category: string): Promise<{ vide
   if (videos.length === 0) return null;
   
   const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+  return {
+    videoId: extractYouTubeVideoId(randomVideo.url),
+    title: randomVideo.title,
+  };
+}
+
+// Get a random focus track from Founder FM
+export async function getRandomFocusTrack(): Promise<{ videoId: string; title: string } | null> {
+  const data = await loadFocusTracks();
+  if (!data || !data.videos || data.videos.length === 0) {
+    return null;
+  }
+  
+  const randomVideo = data.videos[Math.floor(Math.random() * data.videos.length)];
   return {
     videoId: extractYouTubeVideoId(randomVideo.url),
     title: randomVideo.title,

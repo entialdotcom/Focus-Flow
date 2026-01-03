@@ -27,7 +27,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-900 text-white font-sans overflow-hidden">
+    <div className="w-full h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans overflow-hidden transition-colors">
       {view === AppView.HOME ? (
         <Home onSelectMode={handleModeSelect} onPlayFavorite={handlePlayFavorite} />
       ) : (

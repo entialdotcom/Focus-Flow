@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Mode, FavoriteTrack } from '../types';
-import { Brain, Coffee, Moon, Wind, UserCircle, Zap } from 'lucide-react';
+import { Brain, Coffee, Moon, Wind, UserCircle, Zap, Sun, Moon as MoonIcon } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import ProfileModal from './ProfileModal';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface HomeProps {
   onSelectMode: (mode: Mode) => void;
@@ -12,6 +13,7 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   const [userName, setUserName] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const loadProfile = () => {
     const profile = StorageService.getProfile();
@@ -25,82 +27,106 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   const cards = [
     { 
       mode: Mode.FOCUS, 
-      icon: <Brain className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
+      icon: <Brain className="w-12 h-12" />, 
       label: 'Focus', 
       desc: 'Deep work, creativity & studying',
-      gradient: 'from-[#2a0e35] to-[#4a1068] hover:to-[#6a1b9a] border-fuchsia-500/30'
-    },
-    { 
-      mode: Mode.RELAX, 
-      icon: <Coffee className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
-      label: 'Relax', 
-      desc: 'Unwind & recharge',
-      gradient: 'from-[#0f172a] to-[#1e3a8a] hover:to-[#2563eb] border-blue-500/30'
-    },
-    { 
-      mode: Mode.SLEEP, 
-      icon: <Moon className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
-      label: 'Sleep', 
-      desc: 'Drift off & rest deeply',
-      gradient: 'from-[#020617] to-[#1e1b4b] hover:to-[#312e81] border-indigo-500/30'
-    },
-    { 
-      mode: Mode.MEDITATE, 
-      icon: <Wind className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
-      label: 'Meditate', 
-      desc: 'Guided & unguided mindfulness',
-      gradient: 'from-[#042f2e] to-[#0f766e] hover:to-[#0d9488] border-teal-500/30'
     },
     { 
       mode: Mode.MOTIVATION, 
-      icon: <Zap className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
+      icon: <Zap className="w-12 h-12" />, 
       label: 'Motivation', 
       desc: 'Energise your drive & ambition',
-      gradient: 'from-[#7c2d12] to-[#c2410c] hover:to-[#ea580c] border-orange-500/30'
+    },
+    { 
+      mode: Mode.RELAX, 
+      icon: <Coffee className="w-12 h-12" />, 
+      label: 'Relax', 
+      desc: 'Unwind & recharge',
+    },
+    { 
+      mode: Mode.MEDITATE, 
+      icon: <Wind className="w-12 h-12" />, 
+      label: 'Meditate', 
+      desc: 'Guided & unguided mindfulness',
+    },
+    { 
+      mode: Mode.SLEEP, 
+      icon: <Moon className="w-12 h-12" />, 
+      label: 'Sleep', 
+      desc: 'Drift off & rest deeply',
     }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 md:p-8 relative">
-      {/* Profile Button */}
-      <button 
-        onClick={() => setIsProfileOpen(true)}
-        className="absolute top-6 right-6 md:top-10 md:right-10 text-white/50 hover:text-white transition-colors z-20"
-      >
-        <UserCircle className="w-8 h-8 md:w-10 md:h-10" />
-      </button>
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 md:p-8 relative transition-colors">
+          {/* Top Right Controls */}
+          <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center gap-4 z-20">
+            <button 
+              onClick={toggleTheme}
+              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+            </button>
+            <button 
+              onClick={() => setIsProfileOpen(true)}
+              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+            >
+              <UserCircle className="w-5 h-5" />
+            </button>
+          </div>
 
-      <div className="max-w-7xl w-full">
-        <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">
-          Welcome back{userName ? `, ${userName}` : ''}
-        </h1>
-        <p className="text-gray-400 mb-8">Choose your mental state.</p>
+      <div className="max-w-6xl w-full">
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-light text-[var(--text-primary)] mb-3 tracking-tight">
+            Founder FM
+          </h1>
+          <p className="text-[var(--text-secondary)] text-lg font-light">
+            {userName ? `Welcome back, ${userName}` : 'Music for people who want to focus and get sh*t done.'}
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
             <button
               key={card.mode}
               onClick={() => onSelectMode(card.mode)}
-              className={`relative group h-64 md:h-80 rounded-3xl p-8 flex flex-col justify-end items-start text-left bg-gradient-to-br ${card.gradient} border border-transparent hover:border-white/20 transition-all duration-300 transform hover:scale-[1.01] shadow-2xl overflow-hidden`}
+              className="btn-mechanical group relative h-48 rounded-lg p-6 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)]"
             >
-              {/* Illustrative Background Blob */}
-              <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors"></div>
-
-              {/* Icon Container */}
-              <div className="absolute top-8 right-8 transform group-hover:scale-110 transition-transform duration-300">
-                {card.icon}
+              {/* Orange glow effect on hover */}
+              <div className="absolute inset-0 bg-[var(--accent)] opacity-0 group-hover:opacity-5 transition-opacity duration-300 blur-xl"></div>
+              
+              <div className="flex items-center justify-start w-full mb-4 relative z-10">
+                <div className="text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300 group-hover:scale-110">
+                  {card.icon}
+                </div>
               </div>
               
-              <div className="relative z-10">
-                <h2 className="text-3xl font-bold text-white mb-2">{card.label}</h2>
-                <p className="text-white/60 font-medium">{card.desc}</p>
+              <div className="w-full relative z-10">
+                <h2 className="text-xl font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{card.label}</h2>
+                <p className="text-sm text-[var(--text-secondary)] font-light">{card.desc}</p>
               </div>
 
-              {/* Hover Glow */}
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+              {/* Orange accent line on hover */}
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+        <p className="text-xs text-[var(--text-secondary)] font-light opacity-70">
+          ❤️ Built with love + code by{' '}
+          <a 
+            href="https://ential.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors underline underline-offset-2"
+          >
+            Ential
+          </a>
+        </p>
       </div>
 
       <ProfileModal 

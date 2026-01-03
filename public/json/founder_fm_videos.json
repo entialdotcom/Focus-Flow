@@ -1,0 +1,95 @@
+{
+  "channel": {
+    "name": "Founder FM",
+    "handle": "@founder_fm",
+    "subscribers": "4.69K",
+    "total_videos": 12,
+    "description": "Music for people who want to focus and get sh*t done.",
+    "url": "https://www.youtube.com/@founder_fm"
+  },
+  "metadata": {
+    "scraped_date": "2026-01-03T07:49:58.655680",
+    "total_videos": 12,
+    "content_type": "Focus/Productivity Music Playlists"
+  },
+  "videos": [
+    {
+      "title": "Don't waste another year...",
+      "url": "https://www.youtube.com/watch?v=pGjf67YZSw8",
+      "views": "4K",
+      "published": "2 days ago"
+    },
+    {
+      "title": "3-hour deep work session",
+      "url": "https://www.youtube.com/watch?v=OzYBC0dg9oc",
+      "views": "1.8K",
+      "published": "5 days ago"
+    },
+    {
+      "title": "It's time to focus...",
+      "url": "https://www.youtube.com/watch?v=bS2lCUBdeck",
+      "views": "10K",
+      "published": "7 days ago"
+    },
+    {
+      "title": "What if it all works out?",
+      "url": "https://www.youtube.com/watch?v=QTodiClqQ00",
+      "views": "21K",
+      "published": "12 days ago"
+    },
+    {
+      "title": "Unf*ck your brain with this playlist - you need to focus.",
+      "url": "https://www.youtube.com/watch?v=IM-QUqz3EBo",
+      "views": "7K",
+      "published": "2 weeks ago"
+    },
+    {
+      "title": "Work music for people that ACTUALLY want to get sh*t done.",
+      "url": "https://www.youtube.com/watch?v=AwsPPY8auyU",
+      "views": "4.2K",
+      "published": "2 weeks ago"
+    },
+    {
+      "title": "Lock in, it's time to get sh*t done",
+      "url": "https://www.youtube.com/watch?v=3i8bfYdAMjg",
+      "views": "42K",
+      "published": "3 weeks ago"
+    },
+    {
+      "title": "Work music that'll make you EXTREMELY focused.",
+      "url": "https://www.youtube.com/watch?v=NDO8OYSRKuc",
+      "views": "12K",
+      "published": "4 weeks ago"
+    },
+    {
+      "title": "You're unfocused... Use this playlist to clear your mind.",
+      "url": "https://www.youtube.com/watch?v=I6BmV__JDss",
+      "views": "15K",
+      "published": "1 month ago"
+    },
+    {
+      "title": "Need to focus? This playlist will help you lock in.",
+      "url": "https://www.youtube.com/watch?v=BruVjAw1Tnc",
+      "views": "14K",
+      "published": "1 month ago"
+    },
+    {
+      "title": "Music for people who want to get sh*t done",
+      "url": "https://www.youtube.com/watch?v=SetrYp0FEtw",
+      "views": "73K",
+      "published": "1 month ago"
+    },
+    {
+      "title": "This playlist will unf*** your brain - you need to focus.",
+      "url": "https://www.youtube.com/watch?v=0o0ZdUTYZaY",
+      "views": "146K",
+      "published": "1 month ago"
+    }
+  ],
+  "statistics": {
+    "total_videos": 12,
+    "views_range": "1.8K - 146K",
+    "most_viewed": "This playlist will unf*** your brain - you need to focus.",
+    "most_viewed_count": "146K"
+  }
+}

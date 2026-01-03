@@ -22,18 +22,23 @@ import {
   Heart,
   Flame,
   Sparkles,
-  Star
+  Star,
+  UserCircle,
+  Sun,
+  Moon as MoonIcon
 } from 'lucide-react';
 import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState, FavoriteTrack } from '../types';
 import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS, TRACK_TITLES } from '../constants';
 import { fetchQuote } from '../services/geminiService';
 import { AudioService } from '../services/audioService';
 import { StorageService } from '../services/storageService';
-import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories } from '../services/trackService';
+import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories, getRandomFocusTrack } from '../services/trackService';
+import { useTheme } from '../contexts/ThemeContext';
 import Visualizer from './Visualizer';
 import TimerModal from './TimerModal';
 import MixerPanel from './MixerPanel';
 import AmbientTrack from './AmbientTrack';
+import ProfileModal from './ProfileModal';
 
 interface PlayerProps {
   mode: Mode;
@@ -50,6 +55,9 @@ const formatTime = (seconds: number) => {
 };
 
 const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId, initialTitle, onBack }) => {
+  // Theme
+  const { theme, toggleTheme } = useTheme();
+  
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentActivity, setCurrentActivity] = useState<Activity>(
@@ -69,6 +77,9 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
   // Mixer State
   const [showMixer, setShowMixer] = useState(false);
   const [mixerState, setMixerState] = useState<MixerState>({});
+  
+  // Profile Modal
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   // Ref to track total session time even across play/pauses before unmount
   const sessionTimeRef = useRef(0);
@@ -158,7 +169,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
     }
   };
 
-  // Helper to pick a track (async for motivation/meditation tracks from JSON)
+  // Helper to pick a track (async for motivation/meditation/focus tracks from JSON)
   const pickTrack = async (activityId: string, meditationMood?: string): Promise<string> => {
     // Check if this is a motivation category that should load from JSON
     if (activityId.startsWith('motivation-')) {
@@ -174,6 +185,17 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
     // Check if this is guided meditation with a mood selected
     if (activityId === 'meditate-guided' && meditationMood) {
       const track = await getRandomMeditationTrack(meditationMood);
+      if (track) {
+        setCurrentTrackTitle(track.title);
+        setCurrentVideoId(track.videoId);
+        return track.videoId;
+      }
+    }
+    
+    // Check if this is a Focus mode activity - load from Founder FM JSON
+    const focusActivities = ['deep-work', 'creative', 'light-work', 'learning'];
+    if (focusActivities.includes(activityId)) {
+      const track = await getRandomFocusTrack();
       if (track) {
         setCurrentTrackTitle(track.title);
         setCurrentVideoId(track.videoId);
@@ -331,7 +353,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
   const availableActivities = ACTIVITIES.filter(a => a.mode === mode);
 
   return (
-    <div className="relative w-full h-full flex flex-col text-white overflow-hidden bg-slate-900">
+    <div className="relative w-full h-full flex flex-col text-[var(--text-primary)] overflow-hidden bg-[var(--bg-primary)] transition-colors">
       
       {/* Hidden YouTube Player Container for Main Track */}
       <div id="youtube-player" className="absolute top-0 left-0 w-1 h-1 opacity-0 pointer-events-none -z-50" />
@@ -359,30 +381,30 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
       <Visualizer mode={mode} isPlaying={isPlaying} />
 
       {/* --- Top Bar --- */}
-      <div className="relative z-20 flex justify-between items-center p-6">
+      <div className="relative z-20 flex justify-between items-center p-6 border-b border-[var(--border)] bg-[var(--bg-primary)]">
         <div className="flex items-center gap-4">
-          <button 
+          <button
             onClick={onBack}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+            className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-5 h-5" />
           </button>
-          
+
           {/* Activity Selector Dropdown */}
           <div className="relative">
-            <button 
+            <button
               onClick={() => setShowActivityMenu(!showActivityMenu)}
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg backdrop-blur-md transition-all border border-white/5"
+              className="btn-mechanical flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--text-primary)]"
             >
               {getActivityIcon(currentActivity.id)}
-              <span className="font-medium">{currentActivity.name}</span>
+              <span className="font-medium text-sm">{currentActivity.name}</span>
               <ChevronDown className="w-4 h-4 ml-2 opacity-70" />
             </button>
 
             {/* Dropdown Menu */}
             {showActivityMenu && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-[#1e1e24] border border-white/10 rounded-xl shadow-2xl p-2 z-50 animate-fade-in">
-                <div className="px-3 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Activities</div>
+              <div className="absolute top-full left-0 mt-2 w-64 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg shadow-xl p-2 z-50 animate-fade-in">
+                <div className="px-3 py-2 text-xs font-medium text-[var(--text-primary)] opacity-60 uppercase tracking-wider">Activities</div>
                 {availableActivities.map(act => (
                   <button
                     key={act.id}
@@ -390,17 +412,21 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
                       setCurrentActivity(act);
                       setShowActivityMenu(false);
                     }}
-                    className="w-full flex items-center justify-between px-3 py-3 hover:bg-white/5 rounded-lg group text-left"
+                    className={`w-full flex items-center justify-between px-3 py-3 rounded-lg group text-left transition-colors ${
+                      currentActivity.id === act.id 
+                        ? 'bg-[var(--bg-secondary)]' 
+                        : 'hover:bg-[var(--bg-secondary)]'
+                    }`}
                   >
                     <div className="flex items-center gap-3">
-                       <span className={currentActivity.id === act.id ? 'text-white' : 'text-gray-400 group-hover:text-white'}>
+                       <span className={currentActivity.id === act.id ? 'text-[var(--accent)]' : 'text-[var(--text-primary)] opacity-70 group-hover:opacity-100'}>
                          {getActivityIcon(act.id)}
                        </span>
-                       <span className={currentActivity.id === act.id ? 'text-white font-medium' : 'text-gray-400 group-hover:text-white'}>
+                       <span className={currentActivity.id === act.id ? 'text-[var(--text-primary)] font-medium' : 'text-[var(--text-primary)] opacity-70 group-hover:opacity-100'}>
                          {act.name}
                        </span>
                     </div>
-                    {currentActivity.id === act.id && <Check className="w-4 h-4 text-white" />}
+                    {currentActivity.id === act.id && <Check className="w-4 h-4 text-[var(--accent)]" />}
                   </button>
                 ))}
               </div>
@@ -408,22 +434,37 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+           <button 
+             onClick={toggleTheme}
+             className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+           >
+             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+           </button>
+           <button 
+             onClick={() => setIsProfileOpen(true)}
+             className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+             title="Profile"
+           >
+             <UserCircle className="w-5 h-5" />
+           </button>
            <button 
              onClick={() => setShowTimerSettings(true)}
-             className="p-2 hover:bg-white/10 rounded-full transition-colors relative"
+             className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80 relative"
+             title="Timer Settings"
            >
-             <Settings className="w-6 h-6" />
-             {quotesEnabled && <span className="absolute top-2 right-2 w-2 h-2 bg-green-400 rounded-full"></span>}
+             <Settings className="w-5 h-5" />
+             {quotesEnabled && <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--accent)] rounded-full"></span>}
            </button>
-           <button className="p-2 hover:bg-white/10 rounded-full transition-colors">
-             <Maximize2 className="w-6 h-6" />
+           <button className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80" title="Fullscreen">
+             <Maximize2 className="w-5 h-5" />
            </button>
         </div>
       </div>
 
       {/* --- Center Content (Timer / Visuals / Quotes) --- */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-8">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-8 bg-[var(--bg-primary)]">
         
         {/* Ambient Mixer Panel Overlay */}
         <MixerPanel 
@@ -435,14 +476,14 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
 
         {quotesEnabled ? (
           <div className="max-w-2xl text-center animate-fade-in">
-            <h2 className="text-3xl md:text-5xl font-light leading-tight mb-6 tracking-wide drop-shadow-2xl">
+            <h2 className="text-3xl md:text-5xl font-light leading-tight mb-6 tracking-wide text-[var(--text-primary)]">
               "{quote?.text || "Generating insight..."}"
             </h2>
-            <p className="text-lg text-white/60 font-medium">— {quote?.author || "AI"}</p>
+            <p className="text-lg text-[var(--text-secondary)] font-light">— {quote?.author || "AI"}</p>
           </div>
         ) : (
           <div className="text-center">
-             <div className="text-8xl font-thin tracking-tighter opacity-90 drop-shadow-2xl font-mono">
+             <div className="text-8xl font-light tracking-tighter text-[var(--text-primary)] font-mono">
                 {timerMode === TimerMode.INFINITE 
                   ? formatTime(elapsed) 
                   : formatTime(timeLeft)
@@ -450,9 +491,9 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
              </div>
              
              {/* Subtext under Timer */}
-             <p className="text-white/50 mt-4 tracking-widest uppercase text-sm font-semibold flex items-center justify-center gap-2">
+             <p className="text-[var(--text-secondary)] mt-4 tracking-widest uppercase text-xs font-light flex items-center justify-center gap-2">
                {timerMode === TimerMode.INTERVALS 
-                 ? (isBreak ? <><Coffee size={14} /> BREAK TIME</> : <><Zap size={14} /> FOCUS TIME</>)
+                 ? (isBreak ? <><Coffee size={12} /> BREAK TIME</> : <><Zap size={12} /> FOCUS TIME</>)
                  : `${mode} SESSION`
                }
              </p>
@@ -462,20 +503,20 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
 
       {/* Meditation Mood Selector Modal */}
       {showMoodSelector && currentActivity.id === 'meditate-guided' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-lg bg-[#1a1a1a] rounded-2xl border border-white/10 p-8 shadow-2xl mx-4">
-            <h2 className="text-2xl font-bold text-white mb-2 text-center">Choose Your Focus</h2>
-            <p className="text-white/50 text-center mb-6">Select a theme for your guided meditation</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-[var(--bg-primary)] rounded-lg border border-[var(--border)] p-8 shadow-xl mx-4">
+            <h2 className="text-2xl font-light text-[var(--text-primary)] mb-2 text-center">Choose Your Focus</h2>
+            <p className="text-[var(--text-secondary)] text-center mb-6 text-sm">Select a theme for your guided meditation</p>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {meditationMoods.map((mood) => (
                 <button
                   key={mood.id}
                   onClick={() => handleSelectMeditationMood(mood.id)}
-                  className="p-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/50 rounded-xl transition-all text-left group"
+                  className="p-4 bg-[var(--bg-secondary)] hover:bg-[var(--bg-secondary)]/80 border border-[var(--border)] hover:border-[var(--accent)] rounded-lg transition-all text-left group"
                 >
-                  <div className="font-medium text-white group-hover:text-teal-400 transition-colors">{mood.name}</div>
-                  <div className="text-xs text-white/40 mt-1 line-clamp-2">{mood.description}</div>
+                  <div className="font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors text-sm">{mood.name}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1 line-clamp-2">{mood.description}</div>
                 </button>
               ))}
             </div>
@@ -484,37 +525,29 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
       )}
 
       {/* --- Bottom Controls --- */}
-      <div className="relative z-20 px-6 pb-6 pt-4 bg-gradient-to-t from-black/80 to-transparent">
+      <div className="relative z-20 px-6 pb-6 pt-4 border-t border-[var(--border)] bg-[var(--bg-primary)]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           
           {/* Left: Track Info */}
           <div className="flex items-center gap-3 w-full md:w-1/3">
-            <div className="w-12 h-12 bg-white/10 rounded-lg overflow-hidden relative flex-shrink-0">
-              <div className={`absolute inset-0 bg-gradient-to-br ${MODE_ACCENT[mode].replace('text-', 'bg-')} opacity-50`}></div>
-              <div className="absolute inset-0 flex items-center justify-center text-xs font-bold">BW</div>
-            </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-base leading-tight truncate">{trackInfo.title}</h3>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs text-white/50">{trackInfo.genre}</span>
-                {selectedMeditationMood && currentActivity.id === 'meditate-guided' && (
-                  <>
-                    <span className="w-1 h-1 bg-white/30 rounded-full"></span>
-                    <button 
-                      onClick={() => setShowMoodSelector(true)}
-                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors"
-                    >
-                      {meditationMoods.find(m => m.id === selectedMeditationMood)?.name || 'Change mood'}
-                    </button>
-                  </>
-                )}
-              </div>
+              <h3 className="font-medium text-base leading-tight truncate text-[var(--text-primary)]">{trackInfo.title}</h3>
+              {selectedMeditationMood && currentActivity.id === 'meditate-guided' && (
+                <div className="flex items-center gap-2 mt-0.5">
+                  <button 
+                    onClick={() => setShowMoodSelector(true)}
+                    className="text-xs text-[var(--accent)] hover:opacity-80 transition-opacity"
+                  >
+                    {meditationMoods.find(m => m.id === selectedMeditationMood)?.name || 'Change mood'}
+                  </button>
+                </div>
+              )}
             </div>
             
             {/* Streak indicator */}
             {streak > 0 && (
-              <div className="hidden lg:flex items-center gap-1.5 text-white/70 ml-2 bg-white/5 px-2.5 py-1 rounded-full flex-shrink-0">
-                <Zap size={12} className="text-yellow-400 fill-yellow-400" />
+              <div className="hidden lg:flex items-center gap-1.5 text-[var(--text-secondary)] ml-2 bg-[var(--bg-secondary)] px-2.5 py-1 rounded-full flex-shrink-0 border border-[var(--border)]">
+                <Zap size={12} className="text-[var(--accent)] fill-[var(--accent)]" />
                 <span className="text-xs font-medium">{streak} days</span>
               </div>
             )}
@@ -525,40 +558,44 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
             <div className="flex items-center gap-4">
               <button 
                 onClick={handleSkip} 
-                className="text-white/50 hover:text-white transition-colors p-1"
+                className="btn-mechanical text-[var(--text-primary)] hover:opacity-80 p-2 rounded-lg"
                 title="Previous track"
               >
-                <SkipBack className="w-6 h-6" />
+                <SkipBack className="w-5 h-5" />
               </button>
               <button 
                 onClick={togglePlay}
-                className="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                className={`w-14 h-14 rounded-full flex items-center justify-center border-2 ${
+                  isPlaying 
+                    ? 'btn-mechanical-active' 
+                    : 'btn-mechanical text-[var(--text-primary)]'
+                }`}
                 title={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-0.5" />}
               </button>
               <button 
                 onClick={handleSkip} 
-                className="text-white/50 hover:text-white transition-colors p-1"
+                className="btn-mechanical text-[var(--text-primary)] hover:opacity-80 p-2 rounded-lg"
                 title="Next track"
               >
-                <SkipForward className="w-6 h-6" />
+                <SkipForward className="w-5 h-5" />
               </button>
             </div>
             
             {/* Volume Control */}
             <div className="flex items-center gap-2 w-full max-w-[200px]">
-              <Volume2 size={16} className="text-white/50 flex-shrink-0" />
+              <Volume2 size={14} className="text-[var(--text-primary)] flex-shrink-0 opacity-70" />
               <input 
                 type="range" 
                 min="0" 
                 max="100" 
                 value={volume} 
                 onChange={(e) => setVolume(Number(e.target.value))}
-                className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-110 transition-all"
+                className="w-full h-1 bg-[var(--bg-secondary)] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-[var(--accent)] [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-110 transition-all"
                 title="Volume"
               />
-              <span className="text-xs text-white/40 w-7 text-right">{volume}%</span>
+              <span className="text-xs text-[var(--text-primary)] w-7 text-right opacity-70">{volume}%</span>
             </div>
           </div>
 
@@ -567,43 +604,43 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
             {/* Save to Favourites Button */}
             <button 
               onClick={handleToggleFavorite}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+              className={`btn-mechanical flex items-center gap-1.5 px-3 py-2 rounded-lg ${
                 isFavorited 
-                  ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+                  ? 'btn-mechanical-active' 
+                  : 'text-[var(--text-primary)] hover:opacity-80'
               }`}
               title={isFavorited ? 'Remove from favourites' : 'Save to favourites'}
             >
-              <Heart size={18} className={isFavorited ? 'fill-current' : ''} />
-              <span className="text-sm font-medium">{isFavorited ? 'Saved' : 'Save'}</span>
+              <Heart size={16} className={isFavorited ? 'fill-current' : ''} />
+              <span className="text-xs font-medium">{isFavorited ? 'Saved' : 'Save'}</span>
             </button>
 
             {/* Share Button */}
             <button 
               onClick={handleShare} 
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+              className={`btn-mechanical flex items-center gap-1.5 px-3 py-2 rounded-lg ${
                 copiedLink 
-                  ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+                  ? 'btn-mechanical-active' 
+                  : 'text-[var(--text-primary)] hover:opacity-80'
               }`}
               title={copiedLink ? 'Link copied!' : 'Share this track'}
             >
-              {copiedLink ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
-              <span className="text-sm font-medium">{copiedLink ? 'Copied!' : 'Share'}</span>
+              {copiedLink ? <CheckCircle2 size={16} /> : <Share2 size={16} />}
+              <span className="text-xs font-medium">{copiedLink ? 'Copied!' : 'Share'}</span>
             </button>
             
             {/* Ambient Mixer Button */}
             <button 
               onClick={() => setShowMixer(!showMixer)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+              className={`btn-mechanical flex items-center gap-1.5 px-3 py-2 rounded-lg ${
                 showMixer 
-                  ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' 
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+                  ? 'btn-mechanical-active' 
+                  : 'text-[var(--text-primary)] hover:opacity-80'
               }`}
               title="Open ambient sound mixer"
             >
-              <Sliders size={18} />
-              <span className="text-sm font-medium">Mixer</span>
+              <Sliders size={16} />
+              <span className="text-xs font-medium">Mixer</span>
             </button>
           </div>
 
@@ -621,6 +658,15 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
         }}
         quotesEnabled={quotesEnabled}
         setQuotesEnabled={setQuotesEnabled}
+      />
+
+      <ProfileModal 
+        isOpen={isProfileOpen} 
+        onClose={() => setIsProfileOpen(false)} 
+        onUpdate={() => {
+          const profile = StorageService.getProfile();
+          setStreak(profile.currentStreak);
+        }}
       />
 
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mode } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface VisualizerProps {
   mode: Mode;
@@ -7,36 +8,36 @@ interface VisualizerProps {
 }
 
 const Visualizer: React.FC<VisualizerProps> = ({ mode, isPlaying }) => {
-  // Determine colors based on mode
+  const { theme } = useTheme();
+  
+  // Subtle gradients matching the new aesthetic
   const getGradient = () => {
-    switch (mode) {
-      case Mode.FOCUS: return 'bg-fuchsia-600';
-      case Mode.RELAX: return 'bg-blue-600';
-      case Mode.SLEEP: return 'bg-indigo-900';
-      case Mode.MEDITATE: return 'bg-teal-600';
-      default: return 'bg-fuchsia-600';
+    const isDark = theme === 'dark';
+    
+    if (isDark) {
+      // Dark mode: subtle dark grey gradient
+      return {
+        primary: 'from-gray-900 via-gray-800 to-gray-900',
+        accent: 'from-gray-800/30 via-gray-700/20 to-gray-800/30',
+      };
+    } else {
+      // Light mode: subtle light gradients - pure white
+      return {
+        primary: 'from-white via-white to-white',
+        accent: 'from-gray-50/30 via-gray-100/20 to-gray-50/30',
+      };
     }
   };
 
-  const baseColor = getGradient();
+  const gradients = getGradient();
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Background base */}
-      <div className="absolute inset-0 bg-slate-900 opacity-90 z-0"></div>
+      {/* Solid background - no gradient */}
+      <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} z-0`}></div>
       
-      {/* Animated Blobs */}
-      <div className={`absolute top-0 left-[-10%] w-[70vw] h-[70vw] ${baseColor} rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob`}></div>
-      <div className={`absolute top-[20%] right-[-10%] w-[60vw] h-[60vw] bg-purple-600 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob animation-delay-2000`}></div>
-      <div className={`absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] bg-pink-600 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob animation-delay-4000`}></div>
-      
-      {/* Overlay Mesh/Texture */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-      
-      {/* Play state pulsing overlay */}
-      {isPlaying && (
-         <div className={`absolute inset-0 bg-black opacity-0 animate-pulse`} style={{ animationDuration: '4s' }}></div>
-      )}
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_1px_1px,_var(--chrome)_1px,_transparent_0)] bg-[length:20px_20px]"></div>
     </div>
   );
 };

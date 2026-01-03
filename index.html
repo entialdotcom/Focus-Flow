@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FocusFlow</title>
+    <title>Founder FM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -34,24 +34,123 @@
       }
     </script>
     <style>
-      body {
-        background-color: #0f172a; /* Slate 900 */
-        color: white;
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f5f5f5;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --accent: #ff6b35;
+        --border: #e5e5e5;
+        --chrome: #c0c0c0;
       }
-      /* Hide scrollbar for clean UI */
+      
+      [data-theme="dark"] {
+        --bg-primary: #151515;
+        --bg-secondary: #252525;
+        --text-primary: #ffffff;
+        --text-secondary: #999999;
+        --accent: #ff6b35;
+        --border: #3a3a3a;
+        --chrome: #808080;
+      }
+      
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Minimal scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e293b; 
+        background: var(--bg-secondary);
       }
       ::-webkit-scrollbar-thumb {
-        background: #475569; 
-        border-radius: 4px;
+        background: var(--chrome);
+        border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #64748b; 
+        background: var(--accent);
+      }
+      
+      /* Mechanical/Tactile Button Styles */
+      .btn-mechanical {
+        position: relative;
+        border: 1px solid var(--border);
+        background: var(--bg-secondary);
+        transition: all 0.2s ease;
+        box-shadow: 
+          0 1px 2px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+      
+      [data-theme="light"] .btn-mechanical {
+        box-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+      }
+      
+      [data-theme="dark"] .btn-mechanical {
+        box-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      }
+      
+      .btn-mechanical:hover {
+        transform: translateY(-1px);
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      
+      [data-theme="light"] .btn-mechanical:hover {
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+      }
+      
+      [data-theme="dark"] .btn-mechanical:hover {
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      }
+      
+      .btn-mechanical:active {
+        transform: translateY(0);
+        box-shadow: 
+          inset 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      [data-theme="light"] .btn-mechanical:active {
+        box-shadow: 
+          inset 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      
+      [data-theme="dark"] .btn-mechanical:active {
+        box-shadow: 
+          inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      }
+      
+      .btn-mechanical-active {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+        box-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+      
+      .btn-mechanical-active:hover {
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
       }
     </style>
   <script type="importmap">

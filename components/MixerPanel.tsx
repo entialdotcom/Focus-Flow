@@ -42,10 +42,10 @@ const MixerPanel: React.FC<MixerPanelProps> = ({ isOpen, onClose, mixerState, se
   };
 
   return (
-    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-[#1e1e24]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] z-50 p-6 animate-fade-in">
+    <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-[var(--bg-primary)] backdrop-blur-xl border border-[var(--border)] rounded-lg shadow-xl z-50 p-6 animate-fade-in">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="font-bold text-white tracking-wider uppercase text-sm">Ambient Mixer</h3>
-        <button onClick={onClose} className="text-white/50 hover:text-white transition-colors">
+        <h3 className="font-light text-[var(--text-primary)] tracking-wider uppercase text-sm">Ambient Mixer</h3>
+        <button onClick={onClose} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
           <X size={18} />
         </button>
       </div>
@@ -58,7 +58,11 @@ const MixerPanel: React.FC<MixerPanelProps> = ({ isOpen, onClose, mixerState, se
             <div key={sound.id} className="flex items-center gap-4">
               <button 
                 onClick={() => toggleSound(sound.id)}
-                className={`p-2 rounded-full transition-all duration-300 ${state.active ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
+                className={`btn-mechanical p-2 rounded-lg ${
+                  state.active 
+                    ? 'btn-mechanical-active' 
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                }`}
                 title={state.active ? `Turn off ${sound.name}` : `Turn on ${sound.name}`}
               >
                 {getIcon(sound.id)}
@@ -66,8 +70,8 @@ const MixerPanel: React.FC<MixerPanelProps> = ({ isOpen, onClose, mixerState, se
               
               <div className="flex-1">
                 <div className="flex justify-between items-center mb-1">
-                  <span className={`text-sm font-medium transition-colors ${state.active ? 'text-white' : 'text-gray-500'}`}>{sound.name}</span>
-                  {state.active && <span className="text-xs text-white/50">{state.volume}%</span>}
+                  <span className={`text-sm font-medium transition-colors ${state.active ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>{sound.name}</span>
+                  {state.active && <span className="text-xs text-[var(--text-secondary)]">{state.volume}%</span>}
                 </div>
                 <input
                   type="range"
@@ -75,7 +79,11 @@ const MixerPanel: React.FC<MixerPanelProps> = ({ isOpen, onClose, mixerState, se
                   max="100"
                   value={state.volume}
                   onChange={(e) => updateVolume(sound.id, Number(e.target.value))}
-                  className={`w-full h-1 rounded-lg appearance-none cursor-pointer transition-all ${state.active ? 'bg-white/20' : 'bg-white/5'} [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-125 transition-all ${state.active ? '[&::-webkit-slider-thumb]:bg-white' : '[&::-webkit-slider-thumb]:bg-gray-600'}`}
+                  className={`w-full h-1 rounded-lg appearance-none cursor-pointer transition-all ${
+                    state.active ? 'bg-[var(--bg-secondary)]' : 'bg-[var(--bg-secondary)]'
+                  } [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-125 transition-all ${
+                    state.active ? '[&::-webkit-slider-thumb]:bg-[var(--accent)]' : '[&::-webkit-slider-thumb]:bg-[var(--chrome)]'
+                  }`}
                 />
               </div>
             </div>
