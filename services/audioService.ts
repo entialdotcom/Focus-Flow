@@ -39,7 +39,6 @@ export const AudioService = {
           disablekb: 1,
           fs: 0,
           modestbranding: 1,
-          autoplay: 0, // Explicitly disable autoplay
           origin: window.location.origin
         },
         events: {
@@ -57,12 +56,6 @@ export const AudioService = {
             }
           },
           onStateChange: (event: any) => {
-            // Prevent auto-play when video is loaded (BUFFERING or CUED state)
-            if (event.data === window.YT.PlayerState.BUFFERING || event.data === window.YT.PlayerState.CUED) {
-              if (!shouldPlay) {
-                event.target.pauseVideo();
-              }
-            }
             // Loop video if ended
             if (event.data === window.YT.PlayerState.ENDED) {
               event.target.playVideo();
@@ -100,18 +93,7 @@ export const AudioService = {
     pendingVideoId = videoId;
     if (isReady && player && typeof player.loadVideoById === 'function') {
       try {
-        // Ensure we pause before loading new track to prevent auto-play
-        shouldPlay = false;
-        if (typeof player.pauseVideo === 'function') {
-          player.pauseVideo();
-        }
         player.loadVideoById(videoId);
-        // Explicitly pause after loading to prevent auto-play
-        setTimeout(() => {
-          if (player && typeof player.pauseVideo === 'function' && !shouldPlay) {
-            player.pauseVideo();
-          }
-        }, 100);
       } catch (e) {
         console.warn("AudioService: Error loading video", e);
       }

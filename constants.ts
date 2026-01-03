@@ -15,8 +15,6 @@ export const ACTIVITIES: Activity[] = [
 
   { id: 'meditate-guided', name: 'Guided', description: 'Guided mindfulness', mode: Mode.MEDITATE },
   { id: 'meditate-un', name: 'Unguided', description: 'Open monitoring meditation', mode: Mode.MEDITATE },
-
-  { id: 'motivation', name: 'Motivation', description: 'Energizing and upbeat content to enhance drive and concentration', mode: Mode.MOTIVATION },
 ];
 
 // YouTube Video IDs for each activity
@@ -52,7 +50,6 @@ export const MOCK_TRACKS: Record<Mode, TrackInfo> = {
   [Mode.RELAX]: { title: 'Ambient Drift', genre: 'Down Tempo', effect: 'Alpha Waves' },
   [Mode.SLEEP]: { title: 'Nightfall', genre: 'Atmospheric', effect: 'Delta Waves' },
   [Mode.MEDITATE]: { title: 'Presence', genre: 'Drone', effect: 'Theta Isochronic' },
-  [Mode.MOTIVATION]: { title: 'Drive', genre: 'Motivational', effect: 'Energy Boost' },
 };
 
 // Colors for gradients
@@ -61,7 +58,6 @@ export const MODE_COLORS: Record<Mode, string> = {
   [Mode.RELAX]: 'from-blue-500 to-indigo-900',
   [Mode.SLEEP]: 'from-indigo-900 to-slate-900',
   [Mode.MEDITATE]: 'from-teal-500 to-emerald-900',
-  [Mode.MOTIVATION]: 'from-orange-600 to-red-900',
 };
 
 export const MODE_ACCENT: Record<Mode, string> = {
@@ -69,7 +65,6 @@ export const MODE_ACCENT: Record<Mode, string> = {
   [Mode.RELAX]: 'text-blue-400',
   [Mode.SLEEP]: 'text-indigo-400',
   [Mode.MEDITATE]: 'text-teal-400',
-  [Mode.MOTIVATION]: 'text-orange-400',
 };
 
 export const AMBIENT_SOUNDS: AmbientSound[] = [

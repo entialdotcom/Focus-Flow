@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Mode } from '../types';
-import { Brain, Coffee, Moon, Wind, UserCircle, Zap, History, Music } from 'lucide-react';
+import { Brain, Coffee, Moon, Wind, UserCircle } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import ProfileModal from './ProfileModal';
 
 interface HomeProps {
   onSelectMode: (mode: Mode) => void;
-  onShowHistory: () => void;
-  onShowLibrary: () => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onSelectMode, onShowHistory, onShowLibrary }) => {
+const Home: React.FC<HomeProps> = ({ onSelectMode }) => {
   const [userName, setUserName] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -51,42 +49,18 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onShowHistory, onShowLibrary 
       label: 'Meditate', 
       desc: 'Guided & unguided mindfulness',
       gradient: 'from-[#042f2e] to-[#0f766e] hover:to-[#0d9488] border-teal-500/30'
-    },
-    { 
-      mode: Mode.MOTIVATION, 
-      icon: <Zap className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
-      label: 'Motivation', 
-      desc: 'Energizing content to enhance drive',
-      gradient: 'from-[#7c2d12] to-[#9a3412] hover:to-[#c2410c] border-orange-500/30'
     }
   ];
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 md:p-8 relative">
-      {/* Top Right Buttons */}
-      <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center gap-4 z-20">
-        <button 
-          onClick={onShowLibrary}
-          className="text-white/50 hover:text-white transition-colors"
-          title="Library"
-        >
-          <Music className="w-8 h-8 md:w-10 md:h-10" />
-        </button>
-        <button 
-          onClick={onShowHistory}
-          className="text-white/50 hover:text-white transition-colors"
-          title="Listening History"
-        >
-          <History className="w-8 h-8 md:w-10 md:h-10" />
-        </button>
-        <button 
-          onClick={() => setIsProfileOpen(true)}
-          className="text-white/50 hover:text-white transition-colors"
-          title="Profile"
-        >
-          <UserCircle className="w-8 h-8 md:w-10 md:h-10" />
-        </button>
-      </div>
+      {/* Profile Button */}
+      <button 
+        onClick={() => setIsProfileOpen(true)}
+        className="absolute top-6 right-6 md:top-10 md:right-10 text-white/50 hover:text-white transition-colors z-20"
+      >
+        <UserCircle className="w-8 h-8 md:w-10 md:h-10" />
+      </button>
 
       <div className="max-w-7xl w-full">
         <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">
@@ -94,7 +68,7 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onShowHistory, onShowLibrary 
         </h1>
         <p className="text-gray-400 mb-8">Choose your mental state.</p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
           {cards.map((card) => (
             <button
               key={card.mode}

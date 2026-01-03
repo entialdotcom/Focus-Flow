@@ -16,26 +16,21 @@ import {
   Coffee,
   Brain,
   Sliders,
-  CheckCircle2,
-  Filter
+  CheckCircle2
 } from 'lucide-react';
-import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState, Track, Mood } from '../types';
+import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState } from '../types';
 import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS } from '../constants';
 import { fetchQuote } from '../services/geminiService';
 import { AudioService } from '../services/audioService';
 import { StorageService } from '../services/storageService';
-import { ListeningSession } from '../types';
-import { loadTracksFromJSON, TrackData, getTracksForActivity, getMoodsForActivity } from '../services/trackService';
 import Visualizer from './Visualizer';
 import TimerModal from './TimerModal';
 import MixerPanel from './MixerPanel';
 import AmbientTrack from './AmbientTrack';
-import MoodFilterPanel from './MoodFilterPanel';
 
 interface PlayerProps {
   mode: Mode;
   initialActivityId?: string;
-  initialTrack?: Track | null;
   onBack: () => void;
 }
 
@@ -45,7 +40,7 @@ const formatTime = (seconds: number) => {
   return `${m}:${s < 10 ? '0' : ''}${s}`;
 };
 
-const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, onBack }) => {
+const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentActivity, setCurrentActivity] = useState<Activity>(
@@ -77,18 +72,8 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
   // AI Quote State
   const [quote, setQuote] = useState<Quote | null>(null);
 
-  // Track Data from JSON
-  const [trackData, setTrackData] = useState<TrackData>({});
-  const [tracksLoading, setTracksLoading] = useState(true);
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [selectedMoodId, setSelectedMoodId] = useState<string | undefined>(undefined);
-  const [selectedTrackId, setSelectedTrackId] = useState<string | undefined>(undefined);
-  const [showMoodFilter, setShowMoodFilter] = useState(false);
-
-  // Track Info - use current track if available, otherwise fallback to mock
-  const trackInfo: TrackInfo = currentTrack 
-    ? { title: currentTrack.title, genre: currentTrack.category || 'Track', effect: 'Playing' }
-    : MOCK_TRACKS[mode];
+  // Track Info
+  const trackInfo: TrackInfo = MOCK_TRACKS[mode];
 
   // Icons mapping for activities
   const getActivityIcon = (id: string) => {
@@ -101,59 +86,12 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
     }
   };
 
-  // Helper to pick a track - prioritize JSON tracks, fallback to hardcoded
-  const pickTrack = (activityId: string): string => {
-    // Try to get tracks from JSON data first
-    const jsonTracks = getTracksForActivity(trackData, activityId, selectedMoodId);
-    if (jsonTracks.length > 0) {
-      const randomTrack = jsonTracks[Math.floor(Math.random() * jsonTracks.length)];
-      setCurrentTrack(randomTrack);
-      return randomTrack.videoId;
-    }
-    
-    // Fallback to hardcoded tracks
-    const tracks = ACTIVITY_TRACKS[activityId];
-    if (tracks && tracks.length > 0) {
-      const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-      setCurrentTrack(null); // No track info for hardcoded tracks
-      return randomTrack;
-    }
-    
-    // Final fallback if no tracks available
-    console.warn(`No tracks available for activity: ${activityId}`);
-    return '';
+  // Helper to pick a track
+  const pickTrack = (activityId: string) => {
+    const tracks = ACTIVITY_TRACKS[activityId] || ACTIVITY_TRACKS['deep-work'];
+    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    return randomTrack;
   };
-
-  // Load tracks from JSON on mount
-  useEffect(() => {
-    setTracksLoading(true);
-    loadTracksFromJSON()
-      .then(data => {
-        setTrackData(data);
-        setTracksLoading(false);
-      })
-      .catch(error => {
-        console.error('Error loading tracks:', error);
-        setTrackData({});
-        setTracksLoading(false);
-      });
-  }, []);
-
-  // Refs to capture current values for cleanup
-  const currentActivityRef = useRef(currentActivity);
-  const currentTrackRef = useRef(currentTrack);
-  const selectedMoodIdRef = useRef(selectedMoodId);
-  const modeRef = useRef(mode);
-  const trackDataRef = useRef(trackData);
-
-  // Update refs when values change
-  useEffect(() => {
-    currentActivityRef.current = currentActivity;
-    currentTrackRef.current = currentTrack;
-    selectedMoodIdRef.current = selectedMoodId;
-    modeRef.current = mode;
-    trackDataRef.current = trackData;
-  }, [currentActivity, currentTrack, selectedMoodId, mode, trackData]);
 
   // Initialize Audio and Stats
   useEffect(() => {
@@ -178,87 +116,21 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
       
       // Log session if played for more than 10 seconds
       if (sessionTimeRef.current > 10) {
-        const minutes = sessionTimeRef.current / 60;
-        
-        // Log to profile
-        StorageService.logSession(minutes);
-        
-        // Log detailed session to history using refs to get current values
-        const availableMoods = getMoodsForActivity(trackDataRef.current, currentActivityRef.current.id);
-        const selectedMood = availableMoods.find(m => m.id === selectedMoodIdRef.current);
-        
-        const session: ListeningSession = {
-          id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          date: new Date().toISOString(),
-          duration: minutes,
-          mode: modeRef.current,
-          activityId: currentActivityRef.current.id,
-          activityName: currentActivityRef.current.name,
-          trackTitle: currentTrackRef.current?.title,
-          moodId: selectedMoodIdRef.current,
-          moodName: selectedMood?.name,
-        };
-        
-        StorageService.addSession(session);
+        StorageService.logSession(sessionTimeRef.current / 60);
       }
     };
   }, []);
 
-  // Handle initial track from Library
+  // Handle Activity Change (and initial load)
   useEffect(() => {
-    if (initialTrack && Object.keys(trackData).length > 0) {
-      setCurrentTrack(initialTrack);
-      setSelectedTrackId(initialTrack.id);
-      AudioService.loadTrack(initialTrack.videoId);
-      // Find the activity for this track
-      const entries = Object.entries(trackData) as [string, { tracks: Track[]; moods: Mood[] }][];
-      for (const [activityId, activityData] of entries) {
-        if (activityData?.tracks?.some(t => t.id === initialTrack.id)) {
-          const activity = ACTIVITIES.find(a => a.id === activityId);
-          if (activity) {
-            setCurrentActivity(activity);
-            // Find mood if track has one
-            if (initialTrack.moodId) {
-              setSelectedMoodId(initialTrack.moodId);
-            }
-          }
-          break;
-        }
-      }
-    }
-  }, [initialTrack, trackData]);
-
-  // Handle Activity Change (and initial load) - only reload track when activity/mood changes
-  useEffect(() => {
-     // Skip if we have an initial track (handled by separate effect)
-     if (initialTrack) return;
-     
-     // Ensure we're paused when loading a new track
-     if (isPlaying) {
-       setIsPlaying(false);
-     }
-     
-     // Reset mood and track selection when activity changes
-     setSelectedMoodId(undefined);
-     setSelectedTrackId(undefined);
-     
-     // Try to load a track (will use fallback if JSON tracks not loaded yet)
      const trackId = pickTrack(currentActivity.id);
-     if (trackId) {
-       AudioService.loadTrack(trackId);
-     }
-     // If no track found, that's okay - user can select one from mood filter
-  }, [currentActivity, trackData, selectedMoodId, initialTrack]);
-
-  // Handle Quote fetching separately - don't reload track when quotes toggle
-  useEffect(() => {
+     AudioService.loadTrack(trackId);
+     
      if (quotesEnabled) {
        setQuote(null);
        fetchQuote(currentActivity.name).then(setQuote);
-     } else {
-       setQuote(null);
      }
-  }, [quotesEnabled, currentActivity]);
+  }, [currentActivity, quotesEnabled]);
 
   // Handle Play/Pause & Timer Logic
   useEffect(() => {
@@ -317,9 +189,6 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
   };
 
   const availableActivities = ACTIVITIES.filter(a => a.mode === mode);
-  const availableMoods = getMoodsForActivity(trackData, currentActivity.id);
-  // Get all tracks for the activity (not filtered by mood) - let the panel do the filtering
-  const availableTracks = getTracksForActivity(trackData, currentActivity.id);
 
   return (
     <div className="relative w-full h-full flex flex-col text-white overflow-hidden bg-slate-900">
@@ -424,31 +293,6 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
            setMixerState={setMixerState}
         />
 
-        {/* Mood Filter Panel Overlay */}
-        <MoodFilterPanel
-          isOpen={showMoodFilter}
-          onClose={() => setShowMoodFilter(false)}
-          moods={availableMoods}
-          tracks={availableTracks}
-          selectedMoodId={selectedMoodId}
-          selectedTrackId={selectedTrackId}
-          onSelectMood={(moodId) => {
-            setSelectedMoodId(moodId);
-            setSelectedTrackId(undefined); // Clear track selection when mood changes
-            // Reload track with new mood filter
-            const trackId = pickTrack(currentActivity.id);
-            AudioService.loadTrack(trackId);
-          }}
-          onSelectTrack={(track) => {
-            setSelectedTrackId(track.id);
-            setCurrentTrack(track);
-            // Load and play the selected track
-            AudioService.loadTrack(track.videoId);
-            // Auto-play when track is selected
-            setIsPlaying(true);
-          }}
-        />
-
         {quotesEnabled ? (
           <div className="max-w-2xl text-center animate-fade-in">
             <h2 className="text-3xl md:text-5xl font-light leading-tight mb-6 tracking-wide drop-shadow-2xl">
@@ -505,17 +349,6 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialTrack, 
                >
                  {copiedLink ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
                </button>
-               
-               {/* Mood Filter Toggle - only show if moods are available */}
-               {availableMoods.length > 0 && (
-                 <button 
-                   onClick={() => setShowMoodFilter(!showMoodFilter)}
-                   className={`transition-all duration-300 ${showMoodFilter ? 'text-white' : 'hover:text-white'}`}
-                   title="Filter by Mood"
-                 >
-                   <Filter size={18} />
-                 </button>
-               )}
                
                {/* Ambient Mixer Toggle */}
                <button 
