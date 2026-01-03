@@ -47,7 +47,8 @@ export const AudioService = {
             event.target.setVolume(50);
             
             if (pendingVideoId) {
-              event.target.loadVideoById(pendingVideoId);
+              // Use cueVideoById to load without auto-playing
+              event.target.cueVideoById(pendingVideoId);
             }
             
             // If play was requested before ready
@@ -89,11 +90,20 @@ export const AudioService = {
     }
   },
 
-  loadTrack: (videoId: string) => {
+  loadTrack: (videoId: string, autoPlay: boolean = false) => {
     pendingVideoId = videoId;
-    if (isReady && player && typeof player.loadVideoById === 'function') {
+    if (autoPlay) {
+      shouldPlay = true;
+    }
+    if (isReady && player && typeof player.cueVideoById === 'function') {
       try {
-        player.loadVideoById(videoId);
+        if (autoPlay) {
+          // Use loadVideoById to load and play immediately
+          player.loadVideoById(videoId);
+        } else {
+          // Use cueVideoById to load without auto-playing
+          player.cueVideoById(videoId);
+        }
       } catch (e) {
         console.warn("AudioService: Error loading video", e);
       }

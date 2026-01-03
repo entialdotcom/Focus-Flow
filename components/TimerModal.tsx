@@ -75,7 +75,7 @@ const TimerModal: React.FC<TimerModalProps> = ({
           {timerMode === TimerMode.INFINITE && (
             <div className="text-center">
               <h3 className="text-2xl font-bold mb-2">Infinite Play</h3>
-              <p className="text-gray-400 text-sm">Listen to tracks freely without any time restrictions.</p>
+              <p className="text-gray-400 text-sm">Listen freely without any time restrictions.</p>
             </div>
           )}
 
@@ -99,12 +99,12 @@ const TimerModal: React.FC<TimerModalProps> = ({
           {timerMode === TimerMode.INTERVALS && (
             <div className="text-center animate-fade-in">
                <h3 className="text-2xl font-bold mb-2">Pomodoro Technique</h3>
-               <p className="text-gray-400 text-sm mb-6">25 minutes focus, 5 minutes break.</p>
+               <p className="text-gray-400 text-sm mb-6">25 minutes focus, then 5 minutes rest.</p>
                <button 
                  onClick={handlePomodoroClick}
                  className="px-6 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
                >
-                 Start Session
+                 Begin Session
                </button>
             </div>
           )}
@@ -114,8 +114,8 @@ const TimerModal: React.FC<TimerModalProps> = ({
         {/* Toggle Quotes */}
         <div className="flex items-center justify-between border-t border-white/10 pt-6">
           <div>
-            <div className="text-white font-medium">Activate Quotes</div>
-            <div className="text-gray-400 text-sm">Quotes replace the timer display.</div>
+            <div className="text-white font-medium">Display Quotes</div>
+            <div className="text-gray-400 text-sm">Inspirational quotes replace the timer.</div>
           </div>
           <button 
             className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${quotesEnabled ? 'bg-white' : 'bg-gray-600'}`}

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Mode } from '../types';
-import { Brain, Coffee, Moon, Wind, UserCircle } from 'lucide-react';
+import { Mode, FavoriteTrack } from '../types';
+import { Brain, Coffee, Moon, Wind, UserCircle, Zap } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import ProfileModal from './ProfileModal';
 
 interface HomeProps {
   onSelectMode: (mode: Mode) => void;
+  onPlayFavorite?: (track: FavoriteTrack) => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onSelectMode }) => {
+const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   const [userName, setUserName] = useState('');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -26,21 +27,21 @@ const Home: React.FC<HomeProps> = ({ onSelectMode }) => {
       mode: Mode.FOCUS, 
       icon: <Brain className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
       label: 'Focus', 
-      desc: 'Deep work, creativity & study',
+      desc: 'Deep work, creativity & studying',
       gradient: 'from-[#2a0e35] to-[#4a1068] hover:to-[#6a1b9a] border-fuchsia-500/30'
     },
     { 
       mode: Mode.RELAX, 
       icon: <Coffee className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
       label: 'Relax', 
-      desc: 'Decompress & recharge',
+      desc: 'Unwind & recharge',
       gradient: 'from-[#0f172a] to-[#1e3a8a] hover:to-[#2563eb] border-blue-500/30'
     },
     { 
       mode: Mode.SLEEP, 
       icon: <Moon className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
       label: 'Sleep', 
-      desc: 'Doze off & stay asleep',
+      desc: 'Drift off & rest deeply',
       gradient: 'from-[#020617] to-[#1e1b4b] hover:to-[#312e81] border-indigo-500/30'
     },
     { 
@@ -49,6 +50,13 @@ const Home: React.FC<HomeProps> = ({ onSelectMode }) => {
       label: 'Meditate', 
       desc: 'Guided & unguided mindfulness',
       gradient: 'from-[#042f2e] to-[#0f766e] hover:to-[#0d9488] border-teal-500/30'
+    },
+    { 
+      mode: Mode.MOTIVATION, 
+      icon: <Zap className="w-16 h-16 text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />, 
+      label: 'Motivation', 
+      desc: 'Energise your drive & ambition',
+      gradient: 'from-[#7c2d12] to-[#c2410c] hover:to-[#ea580c] border-orange-500/30'
     }
   ];
 
@@ -99,6 +107,7 @@ const Home: React.FC<HomeProps> = ({ onSelectMode }) => {
         isOpen={isProfileOpen} 
         onClose={() => setIsProfileOpen(false)} 
         onUpdate={loadProfile}
+        onPlayTrack={onPlayFavorite}
       />
     </div>
   );

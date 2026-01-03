@@ -1,27 +1,44 @@
 import React, { useState } from 'react';
 import Home from './components/Home';
 import Player from './components/Player';
-import { AppView, Mode } from './types';
+import { AppView, Mode, FavoriteTrack } from './types';
 
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>(AppView.HOME);
   const [currentMode, setCurrentMode] = useState<Mode>(Mode.FOCUS);
+  const [favoritePlayback, setFavoritePlayback] = useState<FavoriteTrack | null>(null);
 
   const handleModeSelect = (mode: Mode) => {
     setCurrentMode(mode);
+    setFavoritePlayback(null); // Clear any favorite playback
+    setView(AppView.PLAYER);
+  };
+
+  const handlePlayFavorite = (track: FavoriteTrack) => {
+    setFavoritePlayback(track);
+    // Use the stored mode, or default to MOTIVATION if not set
+    setCurrentMode(track.mode || Mode.MOTIVATION);
     setView(AppView.PLAYER);
   };
 
   const handleBack = () => {
     setView(AppView.HOME);
+    setFavoritePlayback(null);
   };
 
   return (
     <div className="w-full h-screen bg-slate-900 text-white font-sans overflow-hidden">
       {view === AppView.HOME ? (
-        <Home onSelectMode={handleModeSelect} />
+        <Home onSelectMode={handleModeSelect} onPlayFavorite={handlePlayFavorite} />
       ) : (
-        <Player mode={currentMode} onBack={handleBack} />
+        <Player 
+          key={favoritePlayback?.videoId || 'default'}
+          mode={currentMode} 
+          onBack={handleBack} 
+          initialActivityId={favoritePlayback?.activityId}
+          initialVideoId={favoritePlayback?.videoId}
+          initialTitle={favoritePlayback?.title}
+        />
       )}
     </div>
   );

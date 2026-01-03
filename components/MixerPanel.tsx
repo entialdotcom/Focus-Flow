@@ -59,6 +59,7 @@ const MixerPanel: React.FC<MixerPanelProps> = ({ isOpen, onClose, mixerState, se
               <button 
                 onClick={() => toggleSound(sound.id)}
                 className={`p-2 rounded-full transition-all duration-300 ${state.active ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
+                title={state.active ? `Turn off ${sound.name}` : `Turn on ${sound.name}`}
               >
                 {getIcon(sound.id)}
               </button>

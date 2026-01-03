@@ -16,13 +16,20 @@ import {
   Coffee,
   Brain,
   Sliders,
-  CheckCircle2
+  CheckCircle2,
+  Target,
+  Trophy,
+  Heart,
+  Flame,
+  Sparkles,
+  Star
 } from 'lucide-react';
-import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState } from '../types';
-import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS } from '../constants';
+import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState, FavoriteTrack } from '../types';
+import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS, TRACK_TITLES } from '../constants';
 import { fetchQuote } from '../services/geminiService';
 import { AudioService } from '../services/audioService';
 import { StorageService } from '../services/storageService';
+import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories } from '../services/trackService';
 import Visualizer from './Visualizer';
 import TimerModal from './TimerModal';
 import MixerPanel from './MixerPanel';
@@ -31,6 +38,8 @@ import AmbientTrack from './AmbientTrack';
 interface PlayerProps {
   mode: Mode;
   initialActivityId?: string;
+  initialVideoId?: string;
+  initialTitle?: string;
   onBack: () => void;
 }
 
@@ -40,7 +49,7 @@ const formatTime = (seconds: number) => {
   return `${m}:${s < 10 ? '0' : ''}${s}`;
 };
 
-const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
+const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId, initialTitle, onBack }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentActivity, setCurrentActivity] = useState<Activity>(
@@ -72,8 +81,63 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
   // AI Quote State
   const [quote, setQuote] = useState<Quote | null>(null);
 
-  // Track Info
-  const trackInfo: TrackInfo = MOCK_TRACKS[mode];
+  // Current track info (for motivation tracks loaded from JSON)
+  // Initialize from props if playing a favorite
+  const [currentTrackTitle, setCurrentTrackTitle] = useState<string | null>(initialTitle || null);
+  const [currentVideoId, setCurrentVideoId] = useState<string | null>(initialVideoId || null);
+  const [isFavorited, setIsFavorited] = useState(false);
+  
+  // Flag to track if we're playing a favorite (don't load random track)
+  const playingFavorite = useRef(!!initialVideoId);
+  
+  // Meditation mood selection
+  const [meditationMoods, setMeditationMoods] = useState<{ id: string; name: string; description: string }[]>([]);
+  const [selectedMeditationMood, setSelectedMeditationMood] = useState<string | null>(null);
+  const [showMoodSelector, setShowMoodSelector] = useState(false);
+  
+  // Load meditation moods when in guided meditation mode
+  useEffect(() => {
+    if (currentActivity.id === 'meditate-guided') {
+      getMeditationCategories().then(categories => {
+        setMeditationMoods(categories);
+        // Show mood selector if no mood selected yet
+        if (!selectedMeditationMood && !playingFavorite.current) {
+          setShowMoodSelector(true);
+        }
+      });
+    } else {
+      setShowMoodSelector(false);
+    }
+  }, [currentActivity.id]);
+
+  // Track Info - use dynamic title for motivation mode if available
+  const trackInfo: TrackInfo = currentTrackTitle 
+    ? { ...MOCK_TRACKS[mode], title: currentTrackTitle }
+    : MOCK_TRACKS[mode];
+
+  // Check favorite status when video changes
+  useEffect(() => {
+    if (currentVideoId) {
+      setIsFavorited(StorageService.isFavorite(currentVideoId));
+    }
+  }, [currentVideoId]);
+
+  // Toggle favorite
+  const handleToggleFavorite = () => {
+    if (!currentVideoId) return;
+    
+    const track: FavoriteTrack = {
+      videoId: currentVideoId,
+      title: trackInfo.title,
+      category: currentActivity.name,
+      activityId: currentActivity.id,
+      mode: mode,
+      addedAt: new Date().toISOString(),
+    };
+    
+    const nowFavorited = StorageService.toggleFavorite(track);
+    setIsFavorited(nowFavorited);
+  };
 
   // Icons mapping for activities
   const getActivityIcon = (id: string) => {
@@ -82,15 +146,59 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
       case 'creative': return <Zap size={18} />;
       case 'learning': return <BookOpen size={18} />;
       case 'light-work': return <Coffee size={18} />;
-      default: return <Brain size={18} />;
+      // Motivation activities
+      case 'motivation-discipline': return <Target size={18} />;
+      case 'motivation-perseverance': return <Flame size={18} />;
+      case 'motivation-success': return <Trophy size={18} />;
+      case 'motivation-self_belief': return <Heart size={18} />;
+      case 'motivation-action': return <Zap size={18} />;
+      case 'motivation-mindset': return <Brain size={18} />;
+      case 'motivation-inspiration': return <Star size={18} />;
+      default: return <Sparkles size={18} />;
     }
   };
 
-  // Helper to pick a track
-  const pickTrack = (activityId: string) => {
+  // Helper to pick a track (async for motivation/meditation tracks from JSON)
+  const pickTrack = async (activityId: string, meditationMood?: string): Promise<string> => {
+    // Check if this is a motivation category that should load from JSON
+    if (activityId.startsWith('motivation-')) {
+      const category = activityId.replace('motivation-', '');
+      const track = await getRandomMotivationTrack(category);
+      if (track) {
+        setCurrentTrackTitle(track.title);
+        setCurrentVideoId(track.videoId);
+        return track.videoId;
+      }
+    }
+    
+    // Check if this is guided meditation with a mood selected
+    if (activityId === 'meditate-guided' && meditationMood) {
+      const track = await getRandomMeditationTrack(meditationMood);
+      if (track) {
+        setCurrentTrackTitle(track.title);
+        setCurrentVideoId(track.videoId);
+        return track.videoId;
+      }
+    }
+    
+    // Fallback to hardcoded tracks
     const tracks = ACTIVITY_TRACKS[activityId] || ACTIVITY_TRACKS['deep-work'];
     const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    
+    // Set title from TRACK_TITLES or use a default
+    const trackTitle = TRACK_TITLES[randomTrack] || `${currentActivity.name} Track`;
+    setCurrentTrackTitle(trackTitle);
+    setCurrentVideoId(randomTrack);
     return randomTrack;
+  };
+  
+  // Handle meditation mood selection
+  const handleSelectMeditationMood = async (moodId: string) => {
+    setSelectedMeditationMood(moodId);
+    setShowMoodSelector(false);
+    const trackId = await pickTrack(currentActivity.id, moodId);
+    // Continue playing if already playing
+    AudioService.loadTrack(trackId, isPlaying);
   };
 
   // Initialize Audio and Stats
@@ -121,15 +229,46 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
     };
   }, []);
 
-  // Handle Activity Change (and initial load)
+  // Load initial track on mount
   useEffect(() => {
-     const trackId = pickTrack(currentActivity.id);
-     AudioService.loadTrack(trackId);
-     
-     if (quotesEnabled) {
-       setQuote(null);
-       fetchQuote(currentActivity.name).then(setQuote);
-     }
+    const loadInitialTrack = async () => {
+      // If we have a favourite to play, load that specific track
+      if (playingFavorite.current && initialVideoId) {
+        AudioService.loadTrack(initialVideoId);
+      } else {
+        // Otherwise load a random track for the activity
+        const trackId = await pickTrack(currentActivity.id);
+        AudioService.loadTrack(trackId);
+      }
+    };
+    loadInitialTrack();
+  }, []); // Only run on mount
+
+  // Handle Activity Change (user manually changes activity)
+  const activityChangeCount = useRef(0);
+  useEffect(() => {
+    // Skip the first render (handled by mount effect above)
+    if (activityChangeCount.current === 0) {
+      activityChangeCount.current = 1;
+      return;
+    }
+    
+    // User changed activity, so we're no longer playing the favorite
+    playingFavorite.current = false;
+    
+    const loadTrack = async () => {
+      const trackId = await pickTrack(currentActivity.id);
+      AudioService.loadTrack(trackId);
+    };
+    loadTrack();
+  }, [currentActivity]);
+  
+  // Handle quotes separately
+  useEffect(() => {
+    if (quotesEnabled) {
+      setQuote(null);
+      fetchQuote(currentActivity.name).then(setQuote);
+    }
   }, [currentActivity, quotesEnabled]);
 
   // Handle Play/Pause & Timer Logic
@@ -177,9 +316,10 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
-  const handleSkip = () => {
-    const trackId = pickTrack(currentActivity.id);
-    AudioService.loadTrack(trackId);
+  const handleSkip = async () => {
+    const trackId = await pickTrack(currentActivity.id, selectedMeditationMood || undefined);
+    // Pass isPlaying to continue playback if already playing
+    AudioService.loadTrack(trackId, isPlaying);
   };
 
   const handleShare = () => {
@@ -320,76 +460,151 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, onBack }) => {
         )}
       </div>
 
+      {/* Meditation Mood Selector Modal */}
+      {showMoodSelector && currentActivity.id === 'meditate-guided' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-[#1a1a1a] rounded-2xl border border-white/10 p-8 shadow-2xl mx-4">
+            <h2 className="text-2xl font-bold text-white mb-2 text-center">Choose Your Focus</h2>
+            <p className="text-white/50 text-center mb-6">Select a theme for your guided meditation</p>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {meditationMoods.map((mood) => (
+                <button
+                  key={mood.id}
+                  onClick={() => handleSelectMeditationMood(mood.id)}
+                  className="p-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-teal-500/50 rounded-xl transition-all text-left group"
+                >
+                  <div className="font-medium text-white group-hover:text-teal-400 transition-colors">{mood.name}</div>
+                  <div className="text-xs text-white/40 mt-1 line-clamp-2">{mood.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* --- Bottom Controls --- */}
-      <div className="relative z-20 px-8 pb-8 pt-4 bg-gradient-to-t from-black/80 to-transparent">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="relative z-20 px-6 pb-6 pt-4 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           
           {/* Left: Track Info */}
-          <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
-             <div className="flex items-center gap-4 mb-2">
-                <div className="w-12 h-12 bg-white/10 rounded-md overflow-hidden relative group cursor-pointer">
-                  {/* Mock Album Art */}
-                   <div className={`absolute inset-0 bg-gradient-to-br ${MODE_ACCENT[mode].replace('text-', 'bg-')} opacity-50`}></div>
-                   <div className="absolute inset-0 flex items-center justify-center text-xs font-bold">BF</div>
-                </div>
-                <div>
-                   <h3 className="font-bold text-lg leading-none">{trackInfo.title}</h3>
-                   <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-white/60 uppercase tracking-wider">{trackInfo.genre}</span>
-                      <span className="w-1 h-1 bg-white/40 rounded-full"></span>
-                      <span className="text-xs text-white/80 bg-white/10 px-2 py-0.5 rounded-full">{trackInfo.effect}</span>
-                   </div>
-                </div>
-             </div>
-             <div className="flex items-center gap-4 text-white/50">
-               {/* Share Button with Feedback */}
-               <button 
-                 onClick={handleShare} 
-                 className={`transition-colors flex items-center gap-1 ${copiedLink ? 'text-green-400' : 'hover:text-white'}`}
-               >
-                 {copiedLink ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
-               </button>
-               
-               {/* Ambient Mixer Toggle */}
-               <button 
-                 onClick={() => setShowMixer(!showMixer)}
-                 className={`transition-all duration-300 ${showMixer ? 'text-white' : 'hover:text-white'}`}
-                 title="Ambient Mixer"
-               >
-                 <Sliders size={18} />
-               </button>
-             </div>
+          <div className="flex items-center gap-3 w-full md:w-1/3">
+            <div className="w-12 h-12 bg-white/10 rounded-lg overflow-hidden relative flex-shrink-0">
+              <div className={`absolute inset-0 bg-gradient-to-br ${MODE_ACCENT[mode].replace('text-', 'bg-')} opacity-50`}></div>
+              <div className="absolute inset-0 flex items-center justify-center text-xs font-bold">BW</div>
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-bold text-base leading-tight truncate">{trackInfo.title}</h3>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-xs text-white/50">{trackInfo.genre}</span>
+                {selectedMeditationMood && currentActivity.id === 'meditate-guided' && (
+                  <>
+                    <span className="w-1 h-1 bg-white/30 rounded-full"></span>
+                    <button 
+                      onClick={() => setShowMoodSelector(true)}
+                      className="text-xs text-teal-400 hover:text-teal-300 transition-colors"
+                    >
+                      {meditationMoods.find(m => m.id === selectedMeditationMood)?.name || 'Change mood'}
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            {/* Streak indicator */}
+            {streak > 0 && (
+              <div className="hidden lg:flex items-center gap-1.5 text-white/70 ml-2 bg-white/5 px-2.5 py-1 rounded-full flex-shrink-0">
+                <Zap size={12} className="text-yellow-400 fill-yellow-400" />
+                <span className="text-xs font-medium">{streak} days</span>
+              </div>
+            )}
           </div>
 
-          {/* Center: Play Controls */}
-          <div className="flex items-center gap-8 w-full md:w-1/3 justify-center">
-             <button onClick={handleSkip} className="text-white/50 hover:text-white transition-colors"><SkipBack className="w-8 h-8" /></button>
-             <button 
-               onClick={togglePlay}
-               className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-             >
-               {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-1" />}
-             </button>
-             <button onClick={handleSkip} className="text-white/50 hover:text-white transition-colors"><SkipForward className="w-8 h-8" /></button>
+          {/* Centre: Play Controls + Volume */}
+          <div className="flex flex-col items-center gap-3 w-full md:w-1/3">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={handleSkip} 
+                className="text-white/50 hover:text-white transition-colors p-1"
+                title="Previous track"
+              >
+                <SkipBack className="w-6 h-6" />
+              </button>
+              <button 
+                onClick={togglePlay}
+                className="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                title={isPlaying ? 'Pause' : 'Play'}
+              >
+                {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-0.5" />}
+              </button>
+              <button 
+                onClick={handleSkip} 
+                className="text-white/50 hover:text-white transition-colors p-1"
+                title="Next track"
+              >
+                <SkipForward className="w-6 h-6" />
+              </button>
+            </div>
+            
+            {/* Volume Control */}
+            <div className="flex items-center gap-2 w-full max-w-[200px]">
+              <Volume2 size={16} className="text-white/50 flex-shrink-0" />
+              <input 
+                type="range" 
+                min="0" 
+                max="100" 
+                value={volume} 
+                onChange={(e) => setVolume(Number(e.target.value))}
+                className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-110 transition-all"
+                title="Volume"
+              />
+              <span className="text-xs text-white/40 w-7 text-right">{volume}%</span>
+            </div>
           </div>
 
-          {/* Right: Volume & Streak */}
-          <div className="flex flex-col items-end w-full md:w-1/3 gap-2">
-             <div className="flex items-center gap-2 text-white/70">
-                <Zap size={14} className="text-yellow-400 fill-yellow-400" />
-                <span className="text-xs font-bold uppercase tracking-wider">{streak > 0 ? `${streak} day streak` : 'Start a streak'}</span>
-             </div>
-             <div className="flex items-center gap-3 group w-full max-w-[160px]">
-                <Volume2 size={18} className="text-white/70" />
-                <input 
-                  type="range" 
-                  min="0" 
-                  max="100" 
-                  value={volume} 
-                  onChange={(e) => setVolume(Number(e.target.value))}
-                  className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full hover:[&::-webkit-slider-thumb]:scale-125 transition-all"
-                />
-             </div>
+          {/* Right: Action Buttons */}
+          <div className="flex items-center gap-2 w-full md:w-1/3 justify-center md:justify-end">
+            {/* Save to Favourites Button */}
+            <button 
+              onClick={handleToggleFavorite}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+                isFavorited 
+                  ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+              }`}
+              title={isFavorited ? 'Remove from favourites' : 'Save to favourites'}
+            >
+              <Heart size={18} className={isFavorited ? 'fill-current' : ''} />
+              <span className="text-sm font-medium">{isFavorited ? 'Saved' : 'Save'}</span>
+            </button>
+
+            {/* Share Button */}
+            <button 
+              onClick={handleShare} 
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+                copiedLink 
+                  ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+              }`}
+              title={copiedLink ? 'Link copied!' : 'Share this track'}
+            >
+              {copiedLink ? <CheckCircle2 size={18} /> : <Share2 size={18} />}
+              <span className="text-sm font-medium">{copiedLink ? 'Copied!' : 'Share'}</span>
+            </button>
+            
+            {/* Ambient Mixer Button */}
+            <button 
+              onClick={() => setShowMixer(!showMixer)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all duration-300 ${
+                showMixer 
+                  ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' 
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10'
+              }`}
+              title="Open ambient sound mixer"
+            >
+              <Sliders size={18} />
+              <span className="text-sm font-medium">Mixer</span>
+            </button>
           </div>
 
         </div>

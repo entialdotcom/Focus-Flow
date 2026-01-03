@@ -7,7 +7,8 @@ export enum Mode {
   FOCUS = 'Focus',
   RELAX = 'Relax',
   SLEEP = 'Sleep',
-  MEDITATE = 'Meditate'
+  MEDITATE = 'Meditate',
+  MOTIVATION = 'Motivation'
 }
 
 export interface Activity {
@@ -55,4 +56,27 @@ export interface MixerState {
     active: boolean;
     volume: number;
   };
+}
+
+export enum BadgeType {
+  LISTENING_HOURS = 'LISTENING_HOURS',
+  STREAK = 'STREAK',
+}
+
+export interface Badge {
+  id: string;
+  type: BadgeType;
+  name: string;
+  description: string;
+  threshold: number;
+  icon: string;
+}
+
+export interface FavoriteTrack {
+  videoId: string;
+  title: string;
+  category?: string; // Activity name for display
+  activityId?: string; // Activity ID for navigation
+  mode?: Mode; // The mode this track belongs to
+  addedAt: string; // ISO date string
 }
