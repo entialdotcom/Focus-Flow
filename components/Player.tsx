@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ArrowLeft, 
-  Settings, 
-  Play, 
-  Pause, 
-  SkipBack, 
-  SkipForward, 
-  Volume2, 
-  Share2, 
+import {
+  ArrowLeft,
+  Settings,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  Share2,
   Maximize2,
   ChevronDown,
   Check,
@@ -25,11 +25,14 @@ import {
   Star,
   UserCircle,
   Sun,
-  Moon as MoonIcon
+  Moon as MoonIcon,
+  Quote as QuoteIcon,
+  Clock,
+  RefreshCw
 } from 'lucide-react';
 import { Mode, Activity, TimerMode, Quote, TrackInfo, MixerState, FavoriteTrack } from '../types';
 import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS, TRACK_TITLES } from '../constants';
-import { fetchQuote } from '../services/geminiService';
+import { getRandomQuote } from '../services/quoteService';
 import { AudioService } from '../services/audioService';
 import { StorageService } from '../services/storageService';
 import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories, getRandomFocusTrack } from '../services/trackService';
@@ -285,13 +288,30 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
     loadTrack();
   }, [currentActivity]);
   
-  // Handle quotes separately
+  // Handle quotes - load from JSON based on mode
   useEffect(() => {
     if (quotesEnabled) {
       setQuote(null);
-      fetchQuote(currentActivity.name).then(setQuote);
+      getRandomQuote(mode).then(setQuote);
     }
-  }, [currentActivity, quotesEnabled]);
+  }, [mode, quotesEnabled]);
+
+  // Auto-cycle quotes every 12 seconds when quotes are enabled and playing
+  useEffect(() => {
+    if (!quotesEnabled || !isPlaying) return;
+
+    const interval = setInterval(() => {
+      getRandomQuote(mode).then(setQuote);
+    }, 12000);
+
+    return () => clearInterval(interval);
+  }, [quotesEnabled, isPlaying, mode]);
+
+  // Function to manually refresh quote
+  const handleRefreshQuote = () => {
+    setQuote(null);
+    getRandomQuote(mode).then(setQuote);
+  };
 
   // Handle Play/Pause & Timer Logic
   useEffect(() => {
@@ -381,8 +401,8 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
       <Visualizer mode={mode} isPlaying={isPlaying} />
 
       {/* --- Top Bar --- */}
-      <div className="relative z-20 flex justify-between items-center p-6 border-b border-[var(--border)] bg-[var(--bg-primary)]">
-        <div className="flex items-center gap-4">
+      <div className="relative z-20 flex justify-between items-center p-3 md:p-6 border-b border-[var(--border)] bg-[var(--bg-primary)]">
+        <div className="flex items-center gap-2 md:gap-4">
           <button
             onClick={onBack}
             className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
@@ -394,11 +414,11 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
           <div className="relative">
             <button
               onClick={() => setShowActivityMenu(!showActivityMenu)}
-              className="btn-mechanical flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--text-primary)]"
+              className="btn-mechanical flex items-center gap-1.5 md:gap-2 px-2 md:px-4 py-2 rounded-lg text-[var(--text-primary)]"
             >
               {getActivityIcon(currentActivity.id)}
-              <span className="font-medium text-sm">{currentActivity.name}</span>
-              <ChevronDown className="w-4 h-4 ml-2 opacity-70" />
+              <span className="font-medium text-xs md:text-sm max-w-[80px] md:max-w-none truncate">{currentActivity.name}</span>
+              <ChevronDown className="w-3 h-3 md:w-4 md:h-4 opacity-70 flex-shrink-0" />
             </button>
 
             {/* Dropdown Menu */}
@@ -434,31 +454,31 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-           <button 
+        <div className="flex items-center gap-1 md:gap-2">
+           <button
              onClick={toggleTheme}
              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
            >
-             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+             {theme === 'dark' ? <Sun className="w-4 h-4 md:w-5 md:h-5" /> : <MoonIcon className="w-4 h-4 md:w-5 md:h-5" />}
            </button>
-           <button 
+           <button
              onClick={() => setIsProfileOpen(true)}
              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
              title="Profile"
            >
-             <UserCircle className="w-5 h-5" />
+             <UserCircle className="w-4 h-4 md:w-5 md:h-5" />
            </button>
-           <button 
+           <button
              onClick={() => setShowTimerSettings(true)}
              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80 relative"
              title="Timer Settings"
            >
-             <Settings className="w-5 h-5" />
+             <Settings className="w-4 h-4 md:w-5 md:h-5" />
              {quotesEnabled && <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--accent)] rounded-full"></span>}
            </button>
            <button className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80" title="Fullscreen">
-             <Maximize2 className="w-5 h-5" />
+             <Maximize2 className="w-4 h-4 md:w-5 md:h-5" />
            </button>
         </div>
       </div>
@@ -477,26 +497,55 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
         {quotesEnabled ? (
           <div className="max-w-2xl text-center animate-fade-in">
             <h2 className="text-3xl md:text-5xl font-light leading-tight mb-6 tracking-wide text-[var(--text-primary)]">
-              "{quote?.text || "Generating insight..."}"
+              "{quote?.text || "Loading wisdom..."}"
             </h2>
-            <p className="text-lg text-[var(--text-secondary)] font-light">— {quote?.author || "AI"}</p>
+            <p className="text-lg text-[var(--text-secondary)] font-light mb-6">— {quote?.author || "..."}</p>
+
+            {/* Toggle to Timer + Refresh Quote */}
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => setQuotesEnabled(false)}
+                className="btn-mechanical flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+                title="Switch to timer"
+              >
+                <Clock size={16} />
+                <span className="text-xs font-medium">Show Timer</span>
+              </button>
+              <button
+                onClick={handleRefreshQuote}
+                className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+                title="New quote"
+              >
+                <RefreshCw size={16} />
+              </button>
+            </div>
           </div>
         ) : (
           <div className="text-center">
              <div className="text-8xl font-light tracking-tighter text-[var(--text-primary)] font-mono">
-                {timerMode === TimerMode.INFINITE 
-                  ? formatTime(elapsed) 
+                {timerMode === TimerMode.INFINITE
+                  ? formatTime(elapsed)
                   : formatTime(timeLeft)
                 }
              </div>
-             
+
              {/* Subtext under Timer */}
              <p className="text-[var(--text-secondary)] mt-4 tracking-widest uppercase text-xs font-light flex items-center justify-center gap-2">
-               {timerMode === TimerMode.INTERVALS 
+               {timerMode === TimerMode.INTERVALS
                  ? (isBreak ? <><Coffee size={12} /> BREAK TIME</> : <><Zap size={12} /> FOCUS TIME</>)
                  : `${mode} SESSION`
                }
              </p>
+
+             {/* Toggle to Quotes */}
+             <button
+               onClick={() => setQuotesEnabled(true)}
+               className="btn-mechanical flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--text-primary)] hover:opacity-80 mt-6 mx-auto"
+               title="Switch to quotes"
+             >
+               <QuoteIcon size={16} />
+               <span className="text-xs font-medium">Show Quotes</span>
+             </button>
           </div>
         )}
       </div>

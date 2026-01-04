@@ -58,53 +58,53 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 md:p-8 relative transition-colors">
-          {/* Top Right Controls */}
-          <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center gap-4 z-20">
-            <button 
-              onClick={toggleTheme}
-              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
-              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
-            </button>
-            <button 
-              onClick={() => setIsProfileOpen(true)}
-              className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
-            >
-              <UserCircle className="w-5 h-5" />
-            </button>
-          </div>
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col p-4 md:p-8 relative transition-colors overflow-y-auto">
+      {/* Top Right Controls */}
+      <div className="absolute top-4 right-4 md:top-10 md:right-10 flex items-center gap-2 md:gap-4 z-20">
+        <button
+          onClick={toggleTheme}
+          className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+        </button>
+        <button
+          onClick={() => setIsProfileOpen(true)}
+          className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
+        >
+          <UserCircle className="w-5 h-5" />
+        </button>
+      </div>
 
-      <div className="max-w-6xl w-full">
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-light text-[var(--text-primary)] mb-3 tracking-tight">
+      <div className="max-w-6xl w-full mx-auto flex-1 flex flex-col pt-12 md:pt-0 md:justify-center">
+        <div className="mb-6 md:mb-12">
+          <h1 className="text-3xl md:text-6xl font-light text-[var(--text-primary)] mb-2 md:mb-3 tracking-tight">
             Founder FM
           </h1>
-          <p className="text-[var(--text-secondary)] text-lg font-light">
+          <p className="text-[var(--text-secondary)] text-sm md:text-lg font-light">
             {userName ? `Welcome back, ${userName}` : 'Music for people who want to focus and get sh*t done.'}
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 pb-16 md:pb-0">
           {cards.map((card) => (
             <button
               key={card.mode}
               onClick={() => onSelectMode(card.mode)}
-              className="btn-mechanical group relative h-48 rounded-lg p-6 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)]"
+              className="btn-mechanical group relative h-28 md:h-48 rounded-lg p-3 md:p-6 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)]"
             >
               {/* Orange glow effect on hover */}
               <div className="absolute inset-0 bg-[var(--accent)] opacity-0 group-hover:opacity-5 transition-opacity duration-300 blur-xl"></div>
-              
-              <div className="flex items-center justify-start w-full mb-4 relative z-10">
+
+              <div className="flex items-center justify-start w-full mb-2 md:mb-4 relative z-10">
                 <div className="text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300 group-hover:scale-110">
-                  {card.icon}
+                  {React.cloneElement(card.icon, { className: 'w-7 h-7 md:w-12 md:h-12' })}
                 </div>
               </div>
-              
+
               <div className="w-full relative z-10">
-                <h2 className="text-xl font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{card.label}</h2>
-                <p className="text-sm text-[var(--text-secondary)] font-light">{card.desc}</p>
+                <h2 className="text-sm md:text-xl font-medium text-[var(--text-primary)] mb-0.5 md:mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{card.label}</h2>
+                <p className="text-xs md:text-sm text-[var(--text-secondary)] font-light line-clamp-2">{card.desc}</p>
               </div>
 
               {/* Orange accent line on hover */}
@@ -115,12 +115,12 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+      <div className="py-4 flex justify-center z-10">
         <p className="text-xs text-[var(--text-secondary)] font-light opacity-70">
-          ❤️ Built with love + code by{' '}
-          <a 
-            href="https://ential.com" 
-            target="_blank" 
+          Built with love + code by{' '}
+          <a
+            href="https://ential.com"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors underline underline-offset-2"
           >
