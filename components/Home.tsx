@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 md:p-8 relative transition-colors">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col justify-start md:justify-center p-4 md:p-8 pt-20 md:pt-8 relative transition-colors overflow-y-auto">
           {/* Top Right Controls */}
           <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center gap-4 z-20">
             <button 
@@ -115,12 +115,12 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+      <div className="mt-auto pt-8 pb-4 flex justify-center">
         <p className="text-xs text-[var(--text-secondary)] font-light opacity-70">
-          ❤️ Built with love + code by{' '}
-          <a 
-            href="https://ential.com" 
-            target="_blank" 
+          Built with love + code by{' '}
+          <a
+            href="https://ential.com"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors underline underline-offset-2"
           >

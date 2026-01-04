@@ -353,7 +353,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
   const availableActivities = ACTIVITIES.filter(a => a.mode === mode);
 
   return (
-    <div className="relative w-full h-full flex flex-col text-[var(--text-primary)] overflow-hidden bg-[var(--bg-primary)] transition-colors">
+    <div className="relative w-full min-h-screen flex flex-col text-[var(--text-primary)] overflow-x-hidden bg-[var(--bg-primary)] transition-colors">
       
       {/* Hidden YouTube Player Container for Main Track */}
       <div id="youtube-player" className="absolute top-0 left-0 w-1 h-1 opacity-0 pointer-events-none -z-50" />
