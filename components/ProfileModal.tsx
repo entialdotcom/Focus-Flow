@@ -69,17 +69,17 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, onUpdate, 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <div className="w-full max-w-md bg-[var(--bg-primary)] rounded-lg border border-[var(--border)] p-8 shadow-xl relative max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
-        <button 
+        <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
         >
           <X size={20} />
         </button>
 
         {/* Profile Header */}
         <div className="flex flex-col items-center mb-6">
-          <div className="w-20 h-20 bg-[var(--bg-secondary)] border-2 border-[var(--border)] rounded-full flex items-center justify-center mb-4">
-            <User size={40} className="text-[var(--text-primary)]" />
+          <div className="w-20 h-20 bg-[var(--bg-secondary)] border-2 border-[var(--accent)]/30 rounded-full flex items-center justify-center mb-4 hover:border-[var(--accent)] transition-colors">
+            <User size={40} className="text-[var(--accent)]" />
           </div>
           
           {isEditing ? (

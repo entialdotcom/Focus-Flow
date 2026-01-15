@@ -1,8 +1,8 @@
 import { UserProfile, Badge, BadgeType, FavoriteTrack } from '../types';
 import { ALL_BADGES } from '../badgeConstants';
 
-const STORAGE_KEY = 'focusflow_profile';
-const FAVORITES_KEY = 'focusflow_favorites';
+const STORAGE_KEY = 'focusmode_profile';
+const FAVORITES_KEY = 'focusmode_favorites';
 
 const DEFAULT_PROFILE: UserProfile = {
   name: '',

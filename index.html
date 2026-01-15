@@ -3,15 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Founder FM</title>
+    <title>FocusMode - Curated Music for Focus, Meditation & Productivity</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Curated music for focus, meditation, and productivity. Boost concentration with scientifically-designed soundscapes for deep work, relaxation, and sleep. Free focus music app." />
+    <meta name="keywords" content="focus music, concentration music, productivity music, meditation sounds, ambient music, study music, work music, deep focus, binaural beats, lo-fi, sleep sounds" />
+    <meta name="author" content="Ential" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://focusmode.ential.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://focusmode.ential.com/" />
+    <meta property="og:title" content="FocusMode - Music for Focus & Productivity" />
+    <meta property="og:description" content="Curated music for focus, meditation, and productivity. Boost concentration with scientifically-designed soundscapes." />
+    <meta property="og:site_name" content="FocusMode" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://focusmode.ential.com/" />
+    <meta name="twitter:title" content="FocusMode - Focus Music App" />
+    <meta name="twitter:description" content="Curated music for focus, meditation, and productivity. Free focus music app." />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#EA5B0C" />
+    <meta name="msapplication-TileColor" content="#EA5B0C" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FocusMode",
+      "description": "Curated music for focus, meditation, and productivity with scientifically-designed soundscapes",
+      "url": "https://focusmode.ential.com/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Ential",
+        "url": "https://ential.com"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
             },
             animation: {
               'blob': 'blob 10s infinite',
@@ -34,126 +83,79 @@
       }
     </script>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+      /* Braun-inspired CSS Variables */
       :root {
-        --bg-primary: #ffffff;
-        --bg-secondary: #f5f5f5;
-        --text-primary: #000000;
-        --text-secondary: #666666;
-        --accent: #ff6b35;
-        --border: #e5e5e5;
-        --chrome: #c0c0c0;
+        --bg-primary: #F4F4F0;
+        --bg-secondary: #FFFFFF;
+        --text-primary: #1A1A1A;
+        --text-secondary: #6B6B6B;
+        --accent: #EA5B0C;
+        --accent-hover: #D94E00;
+        --border: #DCDCDC;
+        --chrome: #A1A1AA;
       }
-      
-      [data-theme="dark"] {
-        --bg-primary: #151515;
-        --bg-secondary: #252525;
-        --text-primary: #ffffff;
-        --text-secondary: #999999;
-        --accent: #ff6b35;
-        --border: #3a3a3a;
-        --chrome: #808080;
+
+      .dark {
+        --bg-primary: #1A1A1A;
+        --bg-secondary: #2A2A2A;
+        --text-primary: #F4F4F0;
+        --text-secondary: #9A9A9A;
+        --accent: #EA5B0C;
+        --accent-hover: #FF6B1A;
+        --border: #3A3A3A;
+        --chrome: #71717A;
       }
-      
+
       body {
-        background-color: var(--bg-primary);
-        color: var(--text-primary);
-        transition: background-color 0.3s ease, color 0.3s ease;
+        font-family: 'Inter', sans-serif;
       }
-      
-      /* Minimal scrollbar */
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* Mechanical Button Styles */
+      .btn-mechanical {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border);
+        transition: all 0.15s ease;
+      }
+      .btn-mechanical:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+      .btn-mechanical:active {
+        transform: scale(0.98);
+      }
+      .btn-mechanical-active {
+        background-color: var(--accent);
+        color: white;
+        border: 1px solid var(--accent);
+      }
+      .btn-mechanical-active:hover {
+        background-color: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+
+      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
+        background: transparent;
       }
       ::-webkit-scrollbar-track {
-        background: var(--bg-secondary);
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: var(--chrome);
-        border-radius: 3px;
+        background: var(--border);
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: var(--accent);
-      }
-      
-      /* Mechanical/Tactile Button Styles */
-      .btn-mechanical {
-        position: relative;
-        border: 1px solid var(--border);
-        background: var(--bg-secondary);
-        transition: all 0.2s ease;
-        box-shadow: 
-          0 1px 2px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-      
-      [data-theme="light"] .btn-mechanical {
-        box-shadow: 
-          0 2px 4px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-      }
-      
-      [data-theme="dark"] .btn-mechanical {
-        box-shadow: 
-          0 2px 4px rgba(0, 0, 0, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-      }
-      
-      .btn-mechanical:hover {
-        transform: translateY(-1px);
-        box-shadow: 
-          0 3px 6px rgba(0, 0, 0, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-      
-      [data-theme="light"] .btn-mechanical:hover {
-        box-shadow: 
-          0 3px 6px rgba(0, 0, 0, 0.15),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-      }
-      
-      [data-theme="dark"] .btn-mechanical:hover {
-        box-shadow: 
-          0 3px 6px rgba(0, 0, 0, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-      }
-      
-      .btn-mechanical:active {
-        transform: translateY(0);
-        box-shadow: 
-          inset 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-      
-      [data-theme="light"] .btn-mechanical:active {
-        box-shadow: 
-          inset 0 2px 4px rgba(0, 0, 0, 0.15);
-      }
-      
-      [data-theme="dark"] .btn-mechanical:active {
-        box-shadow: 
-          inset 0 2px 4px rgba(0, 0, 0, 0.4);
-      }
-      
-      .btn-mechanical-active {
-        background: var(--accent);
-        color: white;
-        border-color: var(--accent);
-        box-shadow: 
-          0 2px 4px rgba(0, 0, 0, 0.2),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      }
-      
-      .btn-mechanical-active:hover {
-        box-shadow: 
-          0 3px 6px rgba(0, 0, 0, 0.25),
-          inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        background: var(--chrome);
       }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "lucide-react": "https://esm.sh/lucide-react@0.468.0?external=react",
@@ -166,11 +168,9 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
-</head>
-  <body>
+  </head>
+  <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-[#EA5B0C]/20 selection:text-[#EA5B0C] transition-colors">
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>

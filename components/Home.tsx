@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mode, FavoriteTrack } from '../types';
-import { Brain, Coffee, Moon, Wind, UserCircle, Zap, Sun, Moon as MoonIcon } from 'lucide-react';
+import { Brain, Coffee, Moon, Wind, UserCircle, Zap, Sun, Moon as MoonIcon, Headphones } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import ProfileModal from './ProfileModal';
 import { useTheme } from '../contexts/ThemeContext';
@@ -58,76 +58,94 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col p-4 md:p-8 relative transition-colors overflow-y-auto">
-      {/* Top Right Controls */}
-      <div className="absolute top-4 right-4 md:top-10 md:right-10 flex items-center gap-2 md:gap-4 z-20">
-        <button
-          onClick={toggleTheme}
-          className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
-          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {theme === 'dark' ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
-        </button>
-        <button
-          onClick={() => setIsProfileOpen(true)}
-          className="btn-mechanical p-2 rounded-lg text-[var(--text-primary)] hover:opacity-80"
-        >
-          <UserCircle className="w-5 h-5" />
-        </button>
-      </div>
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col transition-colors overflow-y-auto">
+      {/* Header Bar */}
+      <header className="bg-[var(--bg-secondary)]/80 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-50 transition-colors">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center shadow-md shadow-[var(--accent)]/20 transform -rotate-6 hover:rotate-0 transition-transform duration-300">
+              <Headphones className="w-5 h-5 text-white" />
+            </div>
+            <h1 className="text-sm font-bold text-[var(--text-primary)] tracking-tight">
+              FOCUS<span className="text-[var(--accent)]">MODE</span>
+            </h1>
+          </div>
 
-      <div className="max-w-6xl w-full mx-auto flex-1 flex flex-col pt-12 md:pt-0 md:justify-center">
-        <div className="mb-6 md:mb-12">
-          <h1 className="text-3xl md:text-6xl font-light text-[var(--text-primary)] mb-2 md:mb-3 tracking-tight">
-            Founder FM
-          </h1>
-          <p className="text-[var(--text-secondary)] text-sm md:text-lg font-light">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-full hover:bg-[var(--bg-primary)] transition-colors"
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={() => setIsProfileOpen(true)}
+              className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-full hover:bg-[var(--bg-primary)] transition-colors"
+            >
+              <UserCircle className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 md:px-6 py-6 md:py-8">
+        <div className="mb-4 md:mb-6">
+          <p className="text-[var(--text-secondary)] text-sm md:text-base font-light">
             {userName ? `Welcome back, ${userName}` : 'Music for people who want to focus and get sh*t done.'}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 pb-16 md:pb-0">
-          {cards.map((card) => (
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 auto-rows-fr" style={{ minHeight: 'min(calc(80vh - 180px), 600px)' }}>
+          {/* Focus - Featured large tile */}
+          <button
+            onClick={() => onSelectMode(Mode.FOCUS)}
+            className="btn-mechanical group relative col-span-2 lg:col-span-1 lg:row-span-2 rounded-xl p-5 md:p-8 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)] min-h-[160px] md:min-h-0"
+          >
+            <div className="absolute inset-0 bg-[var(--accent)] opacity-0 group-hover:opacity-5 transition-opacity duration-300 blur-xl"></div>
+            <div className="text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300 group-hover:scale-110 relative z-10">
+              <Brain className="w-10 h-10 md:w-16 md:h-16" />
+            </div>
+            <div className="w-full relative z-10">
+              <h2 className="text-xl md:text-3xl font-semibold text-[var(--text-primary)] mb-1 md:mb-2 group-hover:text-[var(--accent)] transition-colors duration-300">Focus</h2>
+              <p className="text-sm md:text-base text-[var(--text-secondary)] font-light">Deep work, creativity & studying</p>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+
+          {/* Other modes - smaller tiles */}
+          {cards.slice(1).map((card) => (
             <button
               key={card.mode}
               onClick={() => onSelectMode(card.mode)}
-              className="btn-mechanical group relative h-28 md:h-48 rounded-lg p-3 md:p-6 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)]"
+              className="btn-mechanical group relative rounded-xl p-4 md:p-6 flex flex-col justify-between items-start text-left overflow-hidden transition-all duration-300 hover:border-[var(--accent)] min-h-[140px] md:min-h-0"
             >
-              {/* Orange glow effect on hover */}
               <div className="absolute inset-0 bg-[var(--accent)] opacity-0 group-hover:opacity-5 transition-opacity duration-300 blur-xl"></div>
-
-              <div className="flex items-center justify-start w-full mb-2 md:mb-4 relative z-10">
-                <div className="text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300 group-hover:scale-110">
-                  {React.cloneElement(card.icon, { className: 'w-7 h-7 md:w-12 md:h-12' })}
-                </div>
+              <div className="text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300 group-hover:scale-110 relative z-10">
+                {React.cloneElement(card.icon, { className: 'w-8 h-8 md:w-10 md:h-10' })}
               </div>
-
               <div className="w-full relative z-10">
-                <h2 className="text-sm md:text-xl font-medium text-[var(--text-primary)] mb-0.5 md:mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{card.label}</h2>
+                <h2 className="text-base md:text-xl font-medium text-[var(--text-primary)] mb-0.5 group-hover:text-[var(--accent)] transition-colors duration-300">{card.label}</h2>
                 <p className="text-xs md:text-sm text-[var(--text-secondary)] font-light line-clamp-2">{card.desc}</p>
               </div>
-
-              {/* Orange accent line on hover */}
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           ))}
         </div>
-      </div>
+      </main>
 
       {/* Footer */}
-      <div className="py-4 flex justify-center z-10">
-        <p className="text-xs text-[var(--text-secondary)] font-light opacity-70">
-          Built with love + code by{' '}
-          <a
-            href="https://ential.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors underline underline-offset-2"
-          >
-            Ential
-          </a>
-        </p>
-      </div>
+      <footer className="py-4 flex justify-center z-10">
+        <a
+          href="https://ential.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+        >
+          ❤️ Made with Love + Code by Ential
+        </a>
+      </footer>
 
       <ProfileModal 
         isOpen={isProfileOpen} 
