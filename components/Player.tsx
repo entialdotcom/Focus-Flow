@@ -574,7 +574,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
       )}
 
       {/* --- Bottom Controls --- */}
-      <div className="relative z-20 px-6 pb-6 pt-4 border-t border-[var(--border)] bg-[var(--bg-primary)]">
+      <div className="relative z-20 px-6 pb-safe-lg pt-4 border-t border-[var(--border)] bg-[var(--bg-primary)]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           
           {/* Left: Track Info */}
