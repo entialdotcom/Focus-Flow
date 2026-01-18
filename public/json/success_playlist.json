@@ -1,0 +1,774 @@
+{
+  "results": [
+    {
+      "input": "I Made It (Cash Money Heroes) - Kevin Rudolf, Birdman, Jay Sean, Lil Wayne",
+      "output": {
+        "song_title": "I Made It (Cash Money Heroes)",
+        "artist": "Kevin Rudolf, Birdman, Jay Sean, Lil Wayne",
+        "youtube_url": "https://www.youtube.com/watch?v=F_7baOCYg-Q",
+        "video_title": "Kevin Rudolf - I Made It (Cash Money Heroes) (Closed-Captioned) ft. Birdman, Jay Sean, Lil Wayne"
+      },
+      "error": ""
+    },
+    {
+      "input": "Yes - LMFAO",
+      "output": {
+        "song_title": "Yes",
+        "artist": "LMFAO",
+        "youtube_url": "https://www.youtube.com/watch?v=k39ju0Z5VmE",
+        "video_title": "LMFAO - Yes"
+      },
+      "error": ""
+    },
+    {
+      "input": "Good Life - Kanye West, T-Pain",
+      "output": {
+        "song_title": "Good Life - Kanye West, T-Pain",
+        "artist": "Kanye West, T-Pain",
+        "youtube_url": "https://www.youtube.com/watch?v=FEKEjpTzB0Q",
+        "video_title": "Kanye West - Good Life ft. T-Pain"
+      },
+      "error": ""
+    },
+    {
+      "input": "Good Life (with G-Eazy & Kehlani) - G-Eazy, Kehlani",
+      "output": {
+        "song_title": "Good Life (with G-Eazy & Kehlani)",
+        "artist": "G-Eazy, Kehlani",
+        "youtube_url": "https://www.youtube.com/watch?v=FG9M0aEpJGE",
+        "video_title": "Kehlani & G-Eazy - Good Life (from The Fate of the Furious: The Album) [Official Music Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Remember the Name (feat. Styles of Beyond) - Fort Minor, Styles Of Beyond",
+      "output": {
+        "song_title": "Remember the Name (feat. Styles of Beyond)",
+        "artist": "Fort Minor, Styles Of Beyond",
+        "youtube_url": "https://www.youtube.com/watch?v=VDvr08sCPOc",
+        "video_title": "Remember The Name (Official Video) - Fort Minor [4K]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Comin' Up - Sammy Adams",
+      "output": {
+        "song_title": "Comin' Up",
+        "artist": "Sammy Adams",
+        "youtube_url": "https://www.youtube.com/watch?v=vjUG9xbXBPk",
+        "video_title": "Sam Adams - Comin' Up"
+      },
+      "error": ""
+    },
+    {
+      "input": "I'm So Paid - Akon, Lil Wayne, Jeezy",
+      "output": {
+        "song_title": "I'm So Paid",
+        "artist": "Akon, Lil Wayne, Jeezy",
+        "youtube_url": "https://www.youtube.com/watch?v=tnAbKuGss4Y",
+        "video_title": "Akon - I'm So Paid (Official Music Video) ft. Lil Wayne, Young Jeezy"
+      },
+      "error": ""
+    },
+    {
+      "input": "X Gon' Give It To Ya - DMX",
+      "output": {
+        "song_title": "X Gon' Give It To Ya",
+        "artist": "DMX",
+        "youtube_url": "https://www.youtube.com/watch?v=fGx6K90TmCI",
+        "video_title": "DMX - X Gon' Give It To Ya"
+      },
+      "error": ""
+    },
+    {
+      "input": "Greenlight (feat. Flo Rida & LunchMoney Lewis) - Pitbull, Flo Rida, LunchMoney Lewis",
+      "output": {
+        "song_title": "Greenlight (feat. Flo Rida & LunchMoney Lewis)",
+        "artist": "Pitbull, Flo Rida, LunchMoney Lewis",
+        "youtube_url": "https://www.youtube.com/watch?v=R7xbhKIiw4Y",
+        "video_title": "Pitbull - Greenlight (Official Video) ft. Flo Rida, LunchMoney Lewis"
+      },
+      "error": ""
+    },
+    {
+      "input": "All I Do Is Win (feat. T-Pain, Ludacris, Snoop Dogg & Rick Ross) - DJ Khaled, T-Pain, Ludacris, Snoop Dogg, Rick Ross",
+      "output": {
+        "song_title": "All I Do Is Win (feat. T-Pain, Ludacris, Snoop Dogg & Rick Ross)",
+        "artist": "DJ Khaled, T-Pain, Ludacris, Snoop Dogg, Rick Ross",
+        "youtube_url": "https://www.youtube.com/watch?v=WRc4lH6_bEU",
+        "video_title": "DJ Khaled - All I Do Is Win (Official Video) ft. T-Pain, Ludacris, Rick Ross, Snoop Dogg"
+      },
+      "error": ""
+    },
+    {
+      "input": "It's My Time - Scorcher",
+      "output": {
+        "song_title": "It's My Time",
+        "artist": "Scorcher",
+        "youtube_url": "https://www.youtube.com/watch?v=lAErYNVfMN4",
+        "video_title": "Scorcher- It's My Time (Official)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Coast 2 Coast - Sammy Adams",
+      "output": {
+        "song_title": "Coast 2 Coast",
+        "artist": "Sammy Adams",
+        "youtube_url": "https://www.youtube.com/watch?v=qjQ7ReriA38",
+        "video_title": "Coast 2 Coast"
+      },
+      "error": ""
+    },
+    {
+      "input": "ONE HUNDRED - TY",
+      "output": {
+        "song_title": "ONE HUNDRED",
+        "artist": "TY",
+        "youtube_url": "https://www.youtube.com/watch?v=_-6g5GuYkas",
+        "video_title": "TY - ONE HUNDRED [Official Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Buzzin - Remix Explicit Version - Mann, 50 Cent",
+      "output": {
+        "song_title": "Buzzin - Remix Explicit Version",
+        "artist": "Mann, 50 Cent",
+        "youtube_url": "https://www.youtube.com/watch?v=yfYBiVAzo9s",
+        "video_title": "Mann - Buzzin (Remix) ft. 50 Cent"
+      },
+      "error": ""
+    },
+    {
+      "input": "My Moment (feat. 2 Chainz, Meek Mill and Jeremih) - DJ Drama, 2 Chainz, Meek Mill, Jeremih",
+      "output": {
+        "song_title": "My Moment (feat. 2 Chainz, Meek Mill and Jeremih)",
+        "artist": "DJ Drama, 2 Chainz, Meek Mill, Jeremih",
+        "youtube_url": "https://www.youtube.com/watch?v=uBnUgq_GNiI",
+        "video_title": "DJ Drama - My Moment (Official Video)(Clean) ft. 2 Chainz, Meek Mill, Jeremih"
+      },
+      "error": ""
+    },
+    {
+      "input": "Live My Life - Far East Movement, Justin Bieber",
+      "output": {
+        "song_title": "Live My Life - Far East Movement, Justin Bieber",
+        "artist": "Far East Movement, Justin Bieber",
+        "youtube_url": "https://www.youtube.com/watch?v=Avx35Mjkkhw",
+        "video_title": "Far East Movement - Live My Life ft. Justin Bieber"
+      },
+      "error": ""
+    },
+    {
+      "input": "New Level (feat. Future) - A$AP Ferg, Future",
+      "output": {
+        "song_title": "New Level (feat. Future)",
+        "artist": "A$AP Ferg, Future",
+        "youtube_url": "https://www.youtube.com/watch?v=Srns7NiO278",
+        "video_title": "FERG - New Level (Official Video) ft. Future"
+      },
+      "error": ""
+    },
+    {
+      "input": "Still I Rise (feat. Sam Adams) - G Curtis",
+      "output": {
+        "song_title": "Still I Rise (feat. Sam Adams)",
+        "artist": "G Curtis",
+        "youtube_url": "https://www.youtube.com/watch?v=BoVx7vCSsFc",
+        "video_title": "Sam Adams- Still I Rise Ft. G. Curtis Official Music Video HD"
+      },
+      "error": ""
+    },
+    {
+      "input": "We Own It (Fast & Furious) - 2 Chainz, Wiz Khalifa",
+      "output": {
+        "song_title": "We Own It (Fast & Furious)",
+        "artist": "2 Chainz, Wiz Khalifa",
+        "youtube_url": "https://www.youtube.com/watch?v=tYQ1Okyi3g4",
+        "video_title": "2 Chainz, Wiz Khalifa - We Own It (Fast & Furious / Official Lyric Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "My Time - Fabolous, Jeremih",
+      "output": {
+        "song_title": "My Time",
+        "artist": "Fabolous, Jeremih",
+        "youtube_url": "https://www.youtube.com/watch?v=SAFWA7qxC0E",
+        "video_title": "Fabolous - My Time ft. Jeremih"
+      },
+      "error": ""
+    },
+    {
+      "input": "Smile (Living My Best Life) (feat. Snoop Dogg, Ball Greezy & Midnight Star) - Lil Duval, Snoop Dogg, Ball Greezy, Midnight Star",
+      "output": {
+        "song_title": "Smile (Living My Best Life) (feat. Snoop Dogg, Ball Greezy & Midnight Star)",
+        "artist": "Lil Duval, Snoop Dogg, Ball Greezy, Midnight Star",
+        "youtube_url": "https://www.youtube.com/watch?v=QFFdSR6U_kc",
+        "video_title": "Smile (Living My Best Life) (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Get to Me - Ace Hood",
+      "output": {
+        "song_title": "Get to Me",
+        "artist": "Ace Hood",
+        "youtube_url": "https://www.youtube.com/watch?v=xAKKb7nFpjM",
+        "video_title": "Ace Hood - Get To Me"
+      },
+      "error": ""
+    },
+    {
+      "input": "Touch The Sky - Kanye West, Lupe Fiasco",
+      "output": {
+        "song_title": "Touch The Sky",
+        "artist": "Kanye West, Lupe Fiasco",
+        "youtube_url": "https://www.youtube.com/watch?v=YkwQbuAGLj4",
+        "video_title": "Kanye West - Touch The Sky (MTV Version) ft. Lupe Fiasco"
+      },
+      "error": ""
+    },
+    {
+      "input": "All Of The Lights - Kanye West",
+      "output": {
+        "song_title": "All Of The Lights",
+        "artist": "Kanye West",
+        "youtube_url": "https://www.youtube.com/watch?v=HAfFfqiYLp0",
+        "video_title": "Kanye West - All Of The Lights ft. Rihanna, Kid Cudi"
+      },
+      "error": ""
+    },
+    {
+      "input": "Can't Be Touched (feat. Mr. Magic & Trouble) - Roy Jones Jr., Mr Magic, Trouble",
+      "output": {
+        "song_title": "Can't Be Touched (feat. Mr. Magic & Trouble)",
+        "artist": "Roy Jones Jr., Mr Magic, Trouble",
+        "youtube_url": "https://www.youtube.com/watch?v=GoCOg8ZzUfg",
+        "video_title": "Roy Jones Jr. - Can't Be Touched (feat Mr. Magic & Trouble)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Till I Collapse - Eminem, Nate Dogg",
+      "output": {
+        "song_title": "Till I Collapse - Eminem, Nate Dogg",
+        "artist": "Eminem, Nate Dogg",
+        "youtube_url": "https://www.youtube.com/watch?v=ytQ5CYE1VZw",
+        "video_title": "Eminem - Till I Collapse [HD]"
+      },
+      "error": ""
+    },
+    {
+      "input": "POWER - Kanye West",
+      "output": {
+        "song_title": "POWER",
+        "artist": "Kanye West",
+        "youtube_url": "https://www.youtube.com/watch?v=L53gjP-TtGE",
+        "video_title": "Kanye West - POWER"
+      },
+      "error": ""
+    },
+    {
+      "input": "Live Your Life - T.I., Rihanna",
+      "output": {
+        "song_title": "Live Your Life",
+        "artist": "T.I., Rihanna",
+        "youtube_url": "https://www.youtube.com/watch?v=koVHN6eO4Xg",
+        "video_title": "T.I. - Live Your Life ft. Rihanna [Official Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Ima Boss (feat. Rick Ross) - Meek Mill, Rick Ross",
+      "output": {
+        "song_title": "Ima Boss (feat. Rick Ross) - Meek Mill, Rick Ross",
+        "artist": "Meek Mill, Rick Ross",
+        "youtube_url": "https://www.youtube.com/watch?v=V1cxP2nCBdU",
+        "video_title": "Meek Mill Feat. Rick Ross - Ima Boss (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Right Above It - Lil Wayne, Drake",
+      "output": {
+        "song_title": "Right Above It",
+        "artist": "Lil Wayne, Drake",
+        "youtube_url": "https://www.youtube.com/watch?v=oUvMv_MxMxQ",
+        "video_title": "Right Above It"
+      },
+      "error": ""
+    },
+    {
+      "input": "Winner (feat. Justin Timberlake & T.I.) - Jamie Foxx, Justin Timberlake, T.I.",
+      "output": {
+        "song_title": "Winner (feat. Justin Timberlake & T.I.)",
+        "artist": "Jamie Foxx, Justin Timberlake, T.I.",
+        "youtube_url": "https://www.youtube.com/watch?v=FD9Kb5RlsP0",
+        "video_title": "Jamie Foxx - Winner (ft. Justin Timberlake & T.I.)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Hall of Fame (feat. will.i.am) - The Script, will.i.am",
+      "output": {
+        "song_title": "Hall of Fame (feat. will.i.am)",
+        "artist": "The Script, will.i.am",
+        "youtube_url": "https://www.youtube.com/watch?v=mk48xRzuNvA",
+        "video_title": "The Script - Hall of Fame (Official Video) ft. will.i.am"
+      },
+      "error": ""
+    },
+    {
+      "input": "Headlines - Drake",
+      "output": {
+        "song_title": "Headlines",
+        "artist": "Drake",
+        "youtube_url": "https://www.youtube.com/watch?v=cimoNqiulUE",
+        "video_title": "Drake - Headlines (Explicit)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Stronger - Kanye West",
+      "output": {
+        "song_title": "Stronger",
+        "artist": "Kanye West",
+        "youtube_url": "https://www.youtube.com/watch?v=PsO6ZnUZI0g",
+        "video_title": "Kanye West - Stronger"
+      },
+      "error": ""
+    },
+    {
+      "input": "Not Afraid - Eminem",
+      "output": {
+        "song_title": "Not Afraid",
+        "artist": "Eminem",
+        "youtube_url": "https://www.youtube.com/watch?v=j5-yKhDd64s",
+        "video_title": "Eminem - Not Afraid"
+      },
+      "error": ""
+    },
+    {
+      "input": "Out Here Grindin' feat. Akon, Lil Boosie, Plies, Ace Hood, Trick Daddy, Rick Ross - DJ Khaled",
+      "output": {
+        "song_title": "Out Here Grindin' feat. Akon, Lil Boosie, Plies, Ace Hood, Trick Daddy, Rick Ross - DJ Khaled",
+        "artist": "DJ Khaled, Akon, Lil Boosie, Plies, Ace Hood, Trick Daddy, Rick Ross",
+        "youtube_url": "https://www.youtube.com/watch?v=leNmxiyDlJk",
+        "video_title": "Dj Khaled Ft Rick Ross, Plies, Trick Daddy, Lil Wayne, Lil boosie, akon - Out here grinding *Lyrics*"
+      },
+      "error": ""
+    },
+    {
+      "input": "In the Zone - P.L.",
+      "output": {
+        "song_title": "In the Zone",
+        "artist": "P.L.",
+        "youtube_url": "https://www.youtube.com/watch?v=Qt8FKhxkdNM",
+        "video_title": "P.L. - (I'm) In The Zone (Official Video) Music by PL / PLOfficial"
+      },
+      "error": ""
+    },
+    {
+      "input": "Go Get It - T.I.",
+      "output": {
+        "song_title": "Go Get It",
+        "artist": "T.I.",
+        "youtube_url": "https://www.youtube.com/watch?v=c6El26ijs5A",
+        "video_title": "Go Get It"
+      },
+      "error": ""
+    },
+    {
+      "input": "Beast Mode - B.o.B",
+      "output": {
+        "song_title": "Beast Mode",
+        "artist": "B.o.B",
+        "youtube_url": "https://www.youtube.com/watch?v=YHIwW3WonzU",
+        "video_title": "B.o.B - Beast Mode"
+      },
+      "error": ""
+    },
+    {
+      "input": "Push It - Rick Ross",
+      "output": {
+        "song_title": "Push It",
+        "artist": "Rick Ross",
+        "youtube_url": "https://www.youtube.com/watch?v=qk2jeE1LOn8",
+        "video_title": "Rick Ross - Push It (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Go Hard or Go Home - Wiz Khalifa, Iggy Azalea",
+      "output": {
+        "song_title": "Go Hard or Go Home",
+        "artist": "Wiz Khalifa, Iggy Azalea",
+        "youtube_url": "https://www.youtube.com/watch?v=D_VRSFpUcp0",
+        "video_title": "Wiz Khalifa & Iggy Azalea – Go Hard or Go Home [Furious 7 Soundtrack]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Go Hard, Go Home (feat. Giz, Swellz & Choppa) - Roy Jones Jr., Giz, Swellz, Choppa",
+      "output": {
+        "song_title": "Go Hard, Go Home (feat. Giz, Swellz & Choppa)",
+        "artist": "Roy Jones Jr., Giz, Swellz, Choppa",
+        "youtube_url": "https://www.youtube.com/watch?v=dvw2ZSjVJ8w",
+        "video_title": "Go Hard, Go Home (feat. Giz, Swellz & Choppa)"
+      },
+      "error": ""
+    },
+    {
+      "input": "I Get Money - 50 Cent",
+      "output": {
+        "song_title": "I Get Money",
+        "artist": "50 Cent",
+        "youtube_url": "https://www.youtube.com/watch?v=GO22Z0T3qPE",
+        "video_title": "50 Cent - I Get Money (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Hustlin' - Rick Ross",
+      "output": {
+        "song_title": "Hustlin'",
+        "artist": "Rick Ross",
+        "youtube_url": "https://www.youtube.com/watch?v=JU9TouRnO84",
+        "video_title": "Rick Ross - Hustlin' (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Galvanize - The Chemical Brothers",
+      "output": {
+        "song_title": "Galvanize",
+        "artist": "The Chemical Brothers",
+        "youtube_url": "https://www.youtube.com/watch?v=Xu3FTEmN-eg",
+        "video_title": "The Chemical Brothers - Galvanize (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Grinding All My Life - Nipsey Hussle",
+      "output": {
+        "song_title": "Grinding All My Life",
+        "artist": "Nipsey Hussle",
+        "youtube_url": "https://www.youtube.com/watch?v=AVrNHI4RdPM",
+        "video_title": "Nipsey Hussle - Grinding All My Life / Stucc In The Grind (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Dedication (feat. Kendrick Lamar) - Nipsey Hussle, Kendrick Lamar",
+      "output": {
+        "song_title": "Dedication (feat. Kendrick Lamar) - Nipsey Hussle, Kendrick Lamar",
+        "artist": "Nipsey Hussle, Kendrick Lamar",
+        "youtube_url": "https://www.youtube.com/watch?v=RXmfYM6dSFg",
+        "video_title": "Dedication feat. Kendrick Lamar - Nipsey Hussle, Victory Lap [Official Audio]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Make It Rain - Fat Joe, Lil Wayne",
+      "output": {
+        "song_title": "Make It Rain",
+        "artist": "Fat Joe, Lil Wayne",
+        "youtube_url": "https://www.youtube.com/watch?v=LjlOfX7vJvw",
+        "video_title": "Fat Joe Ft. Lil Wayne - Make It Rain (Official HD Music Video) (Prod. By Scott Storch)"
+      },
+      "error": ""
+    },
+    {
+      "input": "A Milli - Lil Wayne",
+      "output": {
+        "song_title": "A Milli",
+        "artist": "Lil Wayne",
+        "youtube_url": "https://www.youtube.com/watch?v=1Vf4mMCpNY0",
+        "video_title": "Lil Wayne - A Milli"
+      },
+      "error": ""
+    },
+    {
+      "input": "5 in the Morning - Charli xcx",
+      "output": {
+        "song_title": "5 in the Morning - Charli xcx",
+        "artist": "Charli xcx",
+        "youtube_url": "https://www.youtube.com/watch?v=4qyUb4OU_P8",
+        "video_title": "Charli XCX - 5 In The Morning [Official Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Money (with Tom Misch) - Michael Kiwanuka, Tom Misch",
+      "output": {
+        "song_title": "Money (with Tom Misch)",
+        "artist": "Michael Kiwanuka, Tom Misch",
+        "youtube_url": "https://www.youtube.com/watch?v=EJjn03K0JsQ",
+        "video_title": "Michael Kiwanuka, Tom Misch - Money (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Since I Was Broke - Russ",
+      "output": {
+        "song_title": "Since I Was Broke",
+        "artist": "Russ",
+        "youtube_url": "https://www.youtube.com/watch?v=bVs3wOR8O08",
+        "video_title": "Since I Was Broke"
+      },
+      "error": ""
+    },
+    {
+      "input": "Money Pies - Raiche",
+      "output": {
+        "song_title": "Money Pies",
+        "artist": "Raiche",
+        "youtube_url": "https://www.youtube.com/watch?v=UKNm0U-Yy9A",
+        "video_title": "Raiche - Money Pies [Official Music Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "My Best Life (feat. Mike Waters) - Club Mix - KSHMR, Mike Waters",
+      "output": {
+        "song_title": "My Best Life (feat. Mike Waters) - Club Mix",
+        "artist": "KSHMR, Mike Waters",
+        "youtube_url": "https://www.youtube.com/watch?v=wIc0fGNuYMk",
+        "video_title": "KSHMR - My Best Life (feat. Mike Waters) [Club Mix]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Make The Money - Macklemore & Ryan Lewis",
+      "output": {
+        "song_title": "Make The Money",
+        "artist": "Macklemore & Ryan Lewis",
+        "youtube_url": "https://www.youtube.com/watch?v=T0kyzc5-7vw",
+        "video_title": "Make the Money - Macklemore & Ryan Lewis"
+      },
+      "error": ""
+    },
+    {
+      "input": "The Greatest Speech (feat. The Great Dictator) - MOGUAI, Raumakustik, The Great Dictators",
+      "output": {
+        "song_title": "The Greatest Speech (feat. The Great Dictator)",
+        "artist": "MOGUAI, Raumakustik, The Great Dictators",
+        "youtube_url": "https://www.youtube.com/watch?v=6WrSy9W9sLM",
+        "video_title": "MOGUAI & RAUMAKUSTIK - The Greatest Speech (feat. The Great Dictator) [Official Audio]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Life Is Good (feat. Drake) - Future, Drake",
+      "output": {
+        "song_title": "Life Is Good (feat. Drake)",
+        "artist": "Future, Drake",
+        "youtube_url": "https://www.youtube.com/watch?v=l0U7SxXHkPY",
+        "video_title": "Future - Life Is Good (Official Music Video) ft. Drake"
+      },
+      "error": ""
+    },
+    {
+      "input": "BOSS - Day1",
+      "output": {
+        "song_title": "BOSS",
+        "artist": "Day1",
+        "youtube_url": "https://www.youtube.com/watch?v=je6mesy5HEA",
+        "video_title": "Day1 - BOSS [Official Music Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "HIGHEST IN THE ROOM - Travis Scott",
+      "output": {
+        "song_title": "HIGHEST IN THE ROOM",
+        "artist": "Travis Scott",
+        "youtube_url": "https://www.youtube.com/watch?v=tfSS1e3kYeo",
+        "video_title": "Travis Scott - HIGHEST IN THE ROOM (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Fast Lane - Bad Meets Evil",
+      "output": {
+        "song_title": "Fast Lane",
+        "artist": "Bad Meets Evil",
+        "youtube_url": "https://www.youtube.com/watch?v=rJOsjP33nF4",
+        "video_title": "Bad Meets Evil - Fast Lane ft. Eminem, Royce Da 5'9"
+      },
+      "error": ""
+    },
+    {
+      "input": "Out Here Grindin' - DJ Khaled",
+      "output": {
+        "song_title": "Out Here Grindin'",
+        "artist": "DJ Khaled",
+        "youtube_url": "https://www.youtube.com/watch?v=pKv7dDFpCbk",
+        "video_title": "DJ Khaled \"Out Here Grindin\" Official Video"
+      },
+      "error": ""
+    },
+    {
+      "input": "I'm A Boss - DJ Hotday, Meek Mill, Rick Rose",
+      "output": {
+        "song_title": "I'm A Boss",
+        "artist": "DJ Hotday, Meek Mill, Rick Rose",
+        "youtube_url": "https://www.youtube.com/watch?v=V1cxP2nCBdU",
+        "video_title": "Meek Mill Feat. Rick Ross - Ima Boss (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "We Takin' Over - DJ Khaled",
+      "output": {
+        "song_title": "We Takin' Over",
+        "artist": "DJ Khaled",
+        "youtube_url": "https://www.youtube.com/watch?v=D9g2szHsoz0",
+        "video_title": "DJ KHALED, AKON & TI \"We Takin' Over\""
+      },
+      "error": ""
+    },
+    {
+      "input": "It's A Vibe - 2 Chainz, Ty Dolla $ign, Trey Songz, Jhené Aiko",
+      "output": {
+        "song_title": "It's A Vibe - 2 Chainz, Ty Dolla $ign, Trey Songz, Jhené Aiko",
+        "artist": "2 Chainz, Ty Dolla $ign, Trey Songz, Jhené Aiko",
+        "youtube_url": "https://www.youtube.com/watch?v=tU3p6mz-uxU",
+        "video_title": "2 Chainz - It's A Vibe ft. Ty Dolla $ign, Trey Songz, Jhené Aiko (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Let's Go (feat. Twista & Lil' Jon) - Trick Daddy, Lil Jon, Twista",
+      "output": {
+        "song_title": "Let's Go (feat. Twista & Lil' Jon) - Trick Daddy, Lil Jon, Twista",
+        "artist": "Trick Daddy, Lil Jon, Twista",
+        "youtube_url": "https://www.youtube.com/watch?v=D0sjCgS7vi8",
+        "video_title": "Trick Daddy feat. Lil Jon & Twista - Let's Go (Official Video) [Explicit]"
+      },
+      "error": ""
+    },
+    {
+      "input": "Money - DJ Khaled, Jeezy, Ludacris",
+      "output": {
+        "song_title": "Money - DJ Khaled, Jeezy, Ludacris",
+        "artist": "DJ Khaled, Jeezy, Ludacris",
+        "youtube_url": "https://www.youtube.com/watch?v=pHO7o80GhvQ",
+        "video_title": "Money"
+      },
+      "error": ""
+    },
+    {
+      "input": "Champions - Ron Artest",
+      "output": {
+        "song_title": "Champions",
+        "artist": "Ron Artest",
+        "youtube_url": "https://www.youtube.com/watch?v=tfhme2RAUL0",
+        "video_title": "Ron Artest - CHAMPIONS Official Music Video -Directed by DJ Hotday- Tru Warier Records"
+      },
+      "error": ""
+    },
+    {
+      "input": "How We Do - The Game, 50 Cent",
+      "output": {
+        "song_title": "How We Do",
+        "artist": "The Game, 50 Cent",
+        "youtube_url": "https://www.youtube.com/watch?v=PH34kMOjmQk",
+        "video_title": "The Game - How We Do (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Good Morning - Star Boy Lanez",
+      "output": {
+        "song_title": "Good Morning",
+        "artist": "Star Boy Lanez",
+        "youtube_url": "https://www.youtube.com/watch?v=SHnRELtTawM",
+        "video_title": "Good Morning- star boy lanez"
+      },
+      "error": ""
+    },
+    {
+      "input": "Whatever It Takes - Imagine Dragons",
+      "output": {
+        "song_title": "Whatever It Takes",
+        "artist": "Imagine Dragons",
+        "youtube_url": "https://www.youtube.com/watch?v=gOsM-DYAEhY",
+        "video_title": "Imagine Dragons - Whatever It Takes (Official Music Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Young Shahrukh - Tesher",
+      "output": {
+        "song_title": "Young Shahrukh",
+        "artist": "Tesher",
+        "youtube_url": "https://www.youtube.com/watch?v=ctUvZCOa4Hc",
+        "video_title": "Young Shahrukh - Official Video | Tesher | Latest Viral Song"
+      },
+      "error": ""
+    },
+    {
+      "input": "Breakfast of Champions - Hi-Tone",
+      "output": {
+        "song_title": "Breakfast of Champions",
+        "artist": "Hi-Tone",
+        "youtube_url": "https://www.youtube.com/watch?v=vcg1evVpsVk",
+        "video_title": "Hi-Tone \"Breakfast Of Champions\" [TFC 2.5 Mixtape]"
+      },
+      "error": ""
+    },
+    {
+      "input": "THE REV3NGE - Joey Bada$$",
+      "output": {
+        "song_title": "THE REV3NGE",
+        "artist": "Joey Bada$",
+        "youtube_url": "https://www.youtube.com/watch?v=OrNyZ7X87sE",
+        "video_title": "Joey Bada$$ - THE REV3NGE (Official Video)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Winners Circle - Rockness Monsta",
+      "output": {
+        "song_title": "Winners Circle",
+        "artist": "Rockness Monsta",
+        "youtube_url": "https://www.youtube.com/watch?v=wtt4z7JOPEs",
+        "video_title": "Rockness Monsta - Winners Circle (Official)"
+      },
+      "error": ""
+    },
+    {
+      "input": "Level Up - Mike Teezy",
+      "output": {
+        "song_title": "Level Up",
+        "artist": "Mike Teezy",
+        "youtube_url": "https://www.youtube.com/watch?v=opM4AgyZEdo",
+        "video_title": "Mike Teezy - Level Up // Smoke Free (When The Smoke Clears) [Music Video]"
+      },
+      "error": ""
+    },
+    {
+      "input": "All The Way Up (feat. Infared) - Fat Joe, Remy Ma, French Montana, InfaRed",
+      "output": {
+        "song_title": "All The Way Up (feat. Infared)",
+        "artist": "Fat Joe, Remy Ma, French Montana, InfaRed",
+        "youtube_url": "https://www.youtube.com/watch?v=y2ak_oBeC-I",
+        "video_title": "Fat Joe, Remy Ma - All The Way Up ft. French Montana, Infared"
+      },
+      "error": ""
+    },
+    {
+      "input": "Whatever You Like - T.I.",
+      "output": {
+        "song_title": "Whatever You Like",
+        "artist": "T.I.",
+        "youtube_url": "https://www.youtube.com/watch?v=Kgdr2uytpDI",
+        "video_title": "T.I. - Whatever You Like (Official Video)"
+      },
+      "error": ""
+    }
+  ]
+}

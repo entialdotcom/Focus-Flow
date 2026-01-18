@@ -35,7 +35,7 @@ import { ACTIVITIES, MOCK_TRACKS, MODE_ACCENT, ACTIVITY_TRACKS, AMBIENT_SOUNDS, 
 import { getRandomQuote } from '../services/quoteService';
 import { AudioService } from '../services/audioService';
 import { StorageService } from '../services/storageService';
-import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories, getRandomFocusTrack } from '../services/trackService';
+import { getRandomMotivationTrack, getRandomMeditationTrack, getMeditationCategories, getRandomFocusTrack, getRandomSuccessTrack } from '../services/trackService';
 import { useTheme } from '../contexts/ThemeContext';
 import Visualizer from './Visualizer';
 import TimerModal from './TimerModal';
@@ -168,11 +168,13 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
       case 'motivation-action': return <Zap size={18} />;
       case 'motivation-mindset': return <Brain size={18} />;
       case 'motivation-inspiration': return <Star size={18} />;
+      // Success activities
+      case 'success-music': return <Trophy size={18} />;
       default: return <Sparkles size={18} />;
     }
   };
 
-  // Helper to pick a track (async for motivation/meditation/focus tracks from JSON)
+  // Helper to pick a track (async for motivation/meditation/focus/success tracks from JSON)
   const pickTrack = async (activityId: string, meditationMood?: string): Promise<string> => {
     // Check if this is a motivation category that should load from JSON
     if (activityId.startsWith('motivation-')) {
@@ -184,7 +186,17 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
         return track.videoId;
       }
     }
-    
+
+    // Check if this is a success activity - load from success playlist JSON
+    if (activityId.startsWith('success-')) {
+      const track = await getRandomSuccessTrack();
+      if (track) {
+        setCurrentTrackTitle(track.title);
+        setCurrentVideoId(track.videoId);
+        return track.videoId;
+      }
+    }
+
     // Check if this is guided meditation with a mood selected
     if (activityId === 'meditate-guided' && meditationMood) {
       const track = await getRandomMeditationTrack(meditationMood);
@@ -194,7 +206,7 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
         return track.videoId;
       }
     }
-    
+
     // Check if this is a Focus mode activity - load from Founder FM JSON
     const focusActivities = ['deep-work', 'creative', 'light-work', 'learning'];
     if (focusActivities.includes(activityId)) {
@@ -205,11 +217,11 @@ const Player: React.FC<PlayerProps> = ({ mode, initialActivityId, initialVideoId
         return track.videoId;
       }
     }
-    
+
     // Fallback to hardcoded tracks
     const tracks = ACTIVITY_TRACKS[activityId] || ACTIVITY_TRACKS['deep-work'];
     const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-    
+
     // Set title from TRACK_TITLES or use a default
     const trackTitle = TRACK_TITLES[randomTrack] || `${currentActivity.name} Track`;
     setCurrentTrackTitle(trackTitle);

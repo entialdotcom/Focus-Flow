@@ -8,7 +8,8 @@ export enum Mode {
   RELAX = 'Relax',
   SLEEP = 'Sleep',
   MEDITATE = 'Meditate',
-  MOTIVATION = 'Motivation'
+  MOTIVATION = 'Motivation',
+  SUCCESS = 'Success'
 }
 
 export interface Activity {

@@ -23,6 +23,8 @@ export const ACTIVITIES: Activity[] = [
   { id: 'motivation-action', name: 'Action', description: 'Execute & get it done', mode: Mode.MOTIVATION },
   { id: 'motivation-mindset', name: 'Mindset', description: 'Mental psychology & perspective', mode: Mode.MOTIVATION },
   { id: 'motivation-inspiration', name: 'Inspiration', description: 'Powerful speeches & stories', mode: Mode.MOTIVATION },
+
+  { id: 'success-music', name: 'Success Music', description: 'Hip-hop anthems for winners', mode: Mode.SUCCESS },
 ];
 
 // YouTube Video IDs for each activity
@@ -61,6 +63,9 @@ export const ACTIVITY_TRACKS: Record<string, string[]> = {
   'motivation-action': ['gHD-Oh5qbkM', 'Z1JmzJwnjC0', 'HV-PsU3qqQg'],
   'motivation-mindset': ['0YNLQASyM-8', '5I4YkUGzlvc', 'tvzPmizTRk8'],
   'motivation-inspiration': ['WfIUHHI7xls', 'lTVG1K6bo0I', '8PXG6CmdUlk'],
+
+  // Success Music - loaded dynamically from JSON, fallbacks below
+  'success-music': ['WRc4lH6_bEU', 'VDvr08sCPOc', 'L53gjP-TtGE'],
 };
 
 // Track titles mapped by video ID
@@ -105,6 +110,7 @@ export const MOCK_TRACKS: Record<Mode, TrackInfo> = {
   [Mode.SLEEP]: { title: 'Nightfall', genre: 'Atmospheric', effect: 'Delta Waves' },
   [Mode.MEDITATE]: { title: 'Presence', genre: 'Drone', effect: 'Theta Isochronic' },
   [Mode.MOTIVATION]: { title: 'Rise Up', genre: 'Epic Orchestral', effect: 'Peak Energy' },
+  [Mode.SUCCESS]: { title: 'Victory Lap', genre: 'Hip-Hop', effect: 'Winner Mindset' },
 };
 
 // Colors for gradients
@@ -114,6 +120,7 @@ export const MODE_COLORS: Record<Mode, string> = {
   [Mode.SLEEP]: 'from-indigo-900 to-slate-900',
   [Mode.MEDITATE]: 'from-teal-500 to-emerald-900',
   [Mode.MOTIVATION]: 'from-orange-500 to-red-900',
+  [Mode.SUCCESS]: 'from-amber-500 to-yellow-900',
 };
 
 export const MODE_ACCENT: Record<Mode, string> = {
@@ -122,6 +129,7 @@ export const MODE_ACCENT: Record<Mode, string> = {
   [Mode.SLEEP]: 'text-indigo-400',
   [Mode.MEDITATE]: 'text-teal-400',
   [Mode.MOTIVATION]: 'text-orange-400',
+  [Mode.SUCCESS]: 'text-amber-400',
 };
 
 export const AMBIENT_SOUNDS: AmbientSound[] = [

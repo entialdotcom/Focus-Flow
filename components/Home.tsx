@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mode, FavoriteTrack } from '../types';
-import { Brain, Coffee, Moon, Wind, UserCircle, Zap, Sun, Moon as MoonIcon, Headphones } from 'lucide-react';
+import { Brain, Coffee, Moon, Wind, UserCircle, Zap, Sun, Moon as MoonIcon, Headphones, Trophy } from 'lucide-react';
 import { StorageService } from '../services/storageService';
 import ProfileModal from './ProfileModal';
 import { useTheme } from '../contexts/ThemeContext';
@@ -25,34 +25,40 @@ const Home: React.FC<HomeProps> = ({ onSelectMode, onPlayFavorite }) => {
   }, []);
 
   const cards = [
-    { 
-      mode: Mode.FOCUS, 
-      icon: <Brain className="w-12 h-12" />, 
-      label: 'Focus', 
+    {
+      mode: Mode.FOCUS,
+      icon: <Brain className="w-12 h-12" />,
+      label: 'Focus',
       desc: 'Deep work, creativity & studying',
     },
-    { 
-      mode: Mode.MOTIVATION, 
-      icon: <Zap className="w-12 h-12" />, 
-      label: 'Motivation', 
+    {
+      mode: Mode.MOTIVATION,
+      icon: <Zap className="w-12 h-12" />,
+      label: 'Motivation',
       desc: 'Energise your drive & ambition',
     },
-    { 
-      mode: Mode.RELAX, 
-      icon: <Coffee className="w-12 h-12" />, 
-      label: 'Relax', 
+    {
+      mode: Mode.SUCCESS,
+      icon: <Trophy className="w-12 h-12" />,
+      label: 'Success',
+      desc: 'Hip-hop anthems for winners',
+    },
+    {
+      mode: Mode.RELAX,
+      icon: <Coffee className="w-12 h-12" />,
+      label: 'Relax',
       desc: 'Unwind & recharge',
     },
-    { 
-      mode: Mode.MEDITATE, 
-      icon: <Wind className="w-12 h-12" />, 
-      label: 'Meditate', 
+    {
+      mode: Mode.MEDITATE,
+      icon: <Wind className="w-12 h-12" />,
+      label: 'Meditate',
       desc: 'Guided & unguided mindfulness',
     },
-    { 
-      mode: Mode.SLEEP, 
-      icon: <Moon className="w-12 h-12" />, 
-      label: 'Sleep', 
+    {
+      mode: Mode.SLEEP,
+      icon: <Moon className="w-12 h-12" />,
+      label: 'Sleep',
       desc: 'Drift off & rest deeply',
     }
   ];

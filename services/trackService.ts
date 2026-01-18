@@ -26,6 +26,23 @@ export interface FocusData {
   videos: FocusVideo[];
 }
 
+export interface SuccessTrack {
+  song_title: string;
+  artist: string;
+  youtube_url: string;
+  video_title: string;
+}
+
+export interface SuccessPlaylistItem {
+  input: string;
+  output: SuccessTrack;
+  error: string;
+}
+
+export interface SuccessPlaylistData {
+  results: SuccessPlaylistItem[];
+}
+
 export interface MotivationCategory {
   description: string;
   count: number;
@@ -80,6 +97,7 @@ export function extractYouTubeVideoId(url: string): string {
 let motivationDataCache: MotivationData | null = null;
 let meditationDataCache: MeditationData | null = null;
 let focusDataCache: FocusData | null = null;
+let successPlaylistCache: SuccessPlaylistData | null = null;
 
 // Load motivation videos from JSON
 export async function loadMotivationVideos(): Promise<MotivationData | null> {
@@ -246,11 +264,53 @@ export async function getRandomFocusTrack(): Promise<{ videoId: string; title: s
   if (!data || !data.videos || data.videos.length === 0) {
     return null;
   }
-  
+
   const randomVideo = data.videos[Math.floor(Math.random() * data.videos.length)];
   return {
     videoId: extractYouTubeVideoId(randomVideo.url),
     title: randomVideo.title,
+  };
+}
+
+// Load success playlist from JSON
+export async function loadSuccessPlaylist(): Promise<SuccessPlaylistData | null> {
+  if (successPlaylistCache) {
+    return successPlaylistCache;
+  }
+
+  try {
+    const response = await fetch('/json/success_playlist.json');
+    if (!response.ok) {
+      console.error('Failed to load success playlist:', response.statusText);
+      return null;
+    }
+
+    const data: SuccessPlaylistData = await response.json();
+    successPlaylistCache = data;
+    return data;
+  } catch (error) {
+    console.error('Error loading success playlist:', error);
+    return null;
+  }
+}
+
+// Get a random track from the success playlist
+export async function getRandomSuccessTrack(): Promise<{ videoId: string; title: string } | null> {
+  const data = await loadSuccessPlaylist();
+  if (!data || !data.results || data.results.length === 0) {
+    return null;
+  }
+
+  // Filter out any items with errors
+  const validTracks = data.results.filter(item => !item.error && item.output?.youtube_url);
+  if (validTracks.length === 0) return null;
+
+  const randomItem = validTracks[Math.floor(Math.random() * validTracks.length)];
+  const track = randomItem.output;
+
+  return {
+    videoId: extractYouTubeVideoId(track.youtube_url),
+    title: `${track.song_title} - ${track.artist}`,
   };
 }
 
